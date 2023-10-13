@@ -1,10 +1,10 @@
 # Voicelt - Empowering Student Voices for Local Change
 Welcome to Voicelt, a platform designed to empower students to make a difference in their college campuses. In a world where global change is essential, we believe in the power of thinking locally to bring about meaningful transformations. This README provides an overview of our project and how to get started with it.
 
-About Voicelt
+## About Voicelt
 Quite often, we see enterprising youth striving to make a significant impact on the world. Popular platforms like Change.org and GoFundMe provide a stage for various causes, but there's a gap when it comes to localized change. Voicelt addresses this gap by focusing on enabling students to create, submit, and gather signatures for petitions that affect their college campuses directly.
 
-Key Features:
+## Key Features:
 
 Create Petitions: Students can easily create petitions for issues that pertain to their college or university.
 Collect Signatures: Share your petitions and gather support from fellow students who care about the same issues.
