@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 def logout_view(request):
     logout(request)
-    redirect('home')
+    return redirect('home')
 
 def home(request) :
     return render(request, 'base/home.html')
