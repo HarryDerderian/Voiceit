@@ -7,6 +7,10 @@ from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 
+def logout_view(request):
+    logout(request)
+    redirect('home')
+
 def home(request) :
     return render(request, 'base/home.html')
 
