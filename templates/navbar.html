@@ -5,6 +5,7 @@
         <h1>VOICEIT LOGO</h1>
     </a>
     {%if request.user.is_authenticated%}
+    <p>Welcome, {{ request.user.username }}</p>
     <a href="{% url 'logout' %}">
         <button>Logout</button>
     </a>
