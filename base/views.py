@@ -6,7 +6,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
-
 def logout_view(request):
     logout(request)
     return redirect('home')
@@ -14,15 +13,14 @@ def logout_view(request):
 def home(request) :
     return render(request, 'base/home.html')
 
-
 def registerPage(request) :
     form = UserCreationForm()
     if request.method == 'POST' :
         form = UserCreationForm(request.POST)
         if form.is_valid() :
-            form.save()
+            user = form.save()
+            login(request, user)
             return redirect('home')
-
     context = {'form' : form}
     return render(request, 'base/register.html', context)
 
