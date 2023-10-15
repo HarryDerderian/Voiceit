@@ -21,7 +21,7 @@ def registerPage(request) :
         form = UserCreationForm(request.POST)
         if form.is_valid() :
             form.save()
-            return redirect('home')
+            return redirect('login')
 
     context = {'form' : form}
     return render(request, 'base/register.html', context)
