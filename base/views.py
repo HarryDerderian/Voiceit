@@ -21,6 +21,9 @@ def registerPage(request) :
             user = form.save()
             login(request, user)
             return redirect('home')
+            form.save()
+            return redirect('login')
+
     context = {'form' : form}
     return render(request, 'base/register.html', context)
 

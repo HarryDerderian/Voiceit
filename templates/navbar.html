@@ -1,13 +1,18 @@
-<div>
-    <a href ="/">
+{% load static %}
+<link rel="stylesheet" href="{%static 'style.css'%}"/>
+<div class="navbar">
+    <a href ="{%url 'home'%}">
         <h1>VOICEIT LOGO</h1>
     </a>
     {%if request.user.is_authenticated%}
-        <a href="{% url 'logout' %}">
-            <button>Logout</button>
-        </a>
+    <p>Welcome, {{ request.user.username }}</p>
+    <a href="{% url 'logout' %}">
+        <button>Logout</button>
+    </a>
     {%else%}
-        <a href="{% url 'login' %}">login/register!</a>
+    <a href="{% url 'login' %}">
+        <button>Login/Register</button>
+    </a>
     {% endif %}
 </div>
 <hr>
