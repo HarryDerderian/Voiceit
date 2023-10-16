@@ -1,7 +1,39 @@
-.navbar {
-    list-style-type: disc;
+* {
+    font-family: 'Calibri', Helvetica, Arial, sans-serif;
 }
 
-.navbar button {
+.navbar-div {
+    background-color: orange;
+    padding: 1em 0;
+    font-weight: bold;
+}
+
+.navbar-div ul {
+    list-style: none;
+    display: inline;
+}
+
+.navbar-div li {
+    float: left;
+    
+}
+
+.navbar-div span a {
+    background-color: orange;
+    color:beige;
+    text-decoration: none;
+    padding: 1em 2em;
+}
+
+.navbar-div span a:hover {
+    background-color: darkorange;
+}
+
+.navbar-div .navbar-right{
     float: right;
+}
+
+.text-center {
+    width:90%;
+    margin:auto;
 }

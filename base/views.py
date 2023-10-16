@@ -14,6 +14,9 @@ def logout_view(request):
 def home(request) :
     return render(request, 'base/home.html')
 
+def aboutUs(request):
+    return render(request, 'base/about.html')
+
 
 def registerPage(request) :
     form = UserCreationForm()
