@@ -2,38 +2,52 @@
     font-family: 'Roboto Flex','Calibri', Helvetica, Arial, sans-serif;
 }
 
-.navbar-div {
-    background-color: orange;
-    padding: 1em 0;
-    font-weight: bold;
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: darkorange; 
+    color: beige;
+    border-radius:4px;
 }
 
-.navbar-div ul {
+.navbar-left,
+.navbar-right {
     list-style: none;
-    display: inline;
+    padding: 0;
+    display: flex;
 }
 
-.navbar-div li {
-    float: left;
-    
+.navbar-right {
+    margin-left: auto;
 }
 
-.navbar-div span a {
-    background-color: orange;
-    color:beige;
+.navbar a {
+    display:block;
+    padding: 1em;
     text-decoration: none;
-    padding: 1em 2em;
+    color: beige;
+    margin: 0 15px;
+    border-radius:25px;
 }
 
-.navbar-div span a:hover {
-    background-color: darkorange;
-}
-
-.navbar-div .navbar-right{
-    float: right;
+.navbar a:hover {
+    text-decoration: underline;
+    background-color: orange;
+    border-radius:25px;
 }
 
 .text-center {
     width:90%;
     margin:auto;
+}
+
+.footer {
+    padding-top:1%;
+    position:fixed;
+    bottom:0;
+    width:100%;
+    text-align: center;
+    background-color: darkorange;
+    color:beige;
+    border-radius:4px;
 }

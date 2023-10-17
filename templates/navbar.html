@@ -1,36 +1,41 @@
-{% load static %}
-
-<div class="navbar-div">
-    <span>
-        <ul>
+<div class="navbar">
+    <ul class="navbar-left">
+        <li>
+            <a href="{% url 'home' %}">
+                VOICEIT LOGO
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'aboutUs' %}">
+                About Us
+            </a>
+        </li>
+    </ul>
+    <ul class="navbar-right">
+        {% if request.user.is_authenticated %}
+            {% if request.user.is_staff %}
+                <li>
+                    <a href="/admin">
+                        Admin Panel
+                    </a>
+                </li>
+            {% endif %}
             <li>
-                <a href ="{%url 'home'%}">
-                    VOICEIT LOGO
+                <a>
+                    Welcome, {{ request.user.username }}
                 </a>
             </li>
             <li>
-                <a href ="{%url 'aboutUs'%}">
-                    About Us
-                </a>
-            </li>
-            {%if request.user.is_authenticated%}
-            <li class="navbar-right">
-                <a>{{request.user.username}}</a>
-            </li>
-            <li class="navbar-right">
                 <a href="{% url 'logout' %}">
                     Logout
                 </a>
             </li>
-            {%else%}
-            <li class="navbar-right">
-                <a  href="{% url 'login' %}">
+            {% else %}
+            <li>
+                <a href="{% url 'login' %}">
                     Login/Register
                 </a>
             </li>
-            {% endif %}
-        </ul>
-    </span>
- 
+        {% endif %}
+    </ul>
 </div>
-<hr>
