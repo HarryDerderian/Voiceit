@@ -4,11 +4,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
-from . models import Petition
+from . models import Petition, Category
 
 def petitions(request) :
     # A list of all petition objects
-    context = {"petitions" : Petition.objects.all()}
+    context = {"petitions" : Petition.objects.all(),
+               "categories" : Category.objects.all() }
     return render(request, 'base/petitions.html', context)
 
 def logout_view(request):

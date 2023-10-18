@@ -21,7 +21,7 @@ class Petition(models.Model) :
 
     ALLOW_EMPTY_TEXT = True
     description = models.TextField(null = ALLOW_EMPTY_TEXT, blank = ALLOW_EMPTY_TEXT)
-    # signatures = ?
+    # signatures = will make a subclass of models that has a list of users...
 
     last_updated = models.DateTimeField(auto_now = True)
     creation_date = models.DateTimeField(auto_now_add = True)
