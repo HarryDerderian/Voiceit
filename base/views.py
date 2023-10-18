@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 from django.urls import path
-from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
+from . models import Petition
 
+def petitions(request) :
+    # A list of all petition objects
+    context = {"petitions" : Petition.objects.all()}
+    return render(request, 'base/petitions.html', context)
 
 def logout_view(request):
     logout(request)
