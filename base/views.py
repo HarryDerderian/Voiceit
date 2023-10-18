@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from . models import Petition, Category
 
 def petitions(request) :
-    # A list of all petition objects
+    # A list of all petition objects, and categories
     context = {"petitions" : Petition.objects.all(),
                "categories" : Category.objects.all() }
     return render(request, 'base/petitions.html', context)
