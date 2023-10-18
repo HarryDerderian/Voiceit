@@ -4,11 +4,11 @@
 
 
 
-<h1>petitions placeholder</h1>
+<h1>Petitions</h1>
 <div class="petitions-all">
 
     {% for petition in petitions %}
-    <a href="/">
+    <a href="{% url 'petitions' %}">
     <div class="petition-block">
         <span class="petition-title">{{petition.title}}</span>
         <p>Category: {{petition.category}}</p>

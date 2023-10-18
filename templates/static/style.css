@@ -1,3 +1,11 @@
+:root {
+    --navbar-primary: rgb(228,100,52);
+    --navbar-highlight: rgb(255, 127, 81);
+    --main-hover-bg: rgba(228,100,52, .25);
+    --subdued-yellow: rgb(212,172,100);
+    --subdued-red: rgb(204, 36, 52);
+    --subdued-blue: rgb(44, 76, 124);
+  }
 * {
     font-family: 'Roboto Flex','Calibri', Helvetica, Arial, sans-serif;
 }
@@ -5,7 +13,7 @@
 .navbar {
     display: flex;
     justify-content: space-between;
-    background-color: darkorange; 
+    background-color: var(--navbar-primary); 
     color: beige;
     border-radius:4px;
     position:sticky;
@@ -35,7 +43,7 @@
 
 .navbar a:hover {
     text-decoration: underline;
-    background-color: orange;
+    background-color: var(--navbar-highlight);
     border-radius:25px;
 }
 
@@ -48,7 +56,7 @@
     padding-top:1%;
     width:100%;
     text-align: center;
-    background-color: darkorange;
+    background-color: var(--navbar-primary);
     color:beige;
     border-radius:4px;
     position:fixed;
@@ -68,7 +76,7 @@
 }
 
 .petition-block:hover {
-    background-color: rgba(226, 129, 0, 0.12);
+    background-color:var(--main-hover-bg);
 }
 
 .petition-title {
