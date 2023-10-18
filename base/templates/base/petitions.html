@@ -1,21 +1,23 @@
 {% extends 'main.html' %}
 
 {% block content %}
+
+
+
 <h1>petitions placeholder</h1>
+<div class="petitions-all">
 
-<div>
-    
-    <div>
-        {% for petition in petitions %}
-        <div>
-            <span>{{petition.category}}<br></span>
-            <span>{{petition.author.username}}<br></span>
-            <span>{{petition.title}}<br></span>
-            <span>{{petition.last_updated}}<br></span>
-            <hr>
-        </div>
-        {% endfor %}
+    {% for petition in petitions %}
+    <a href="/">
+    <div class="petition-block">
+        <span class="petition-title">{{petition.title}}</span>
+        <p>Category: {{petition.category}}</p>
+        <p>{{petition.author.username}}: {{petition.last_updated}}</p>
     </div>
-
+    </a>
+    <hr>
+    {% endfor %}
+    
+    
 </div>
 {%endblock content%}

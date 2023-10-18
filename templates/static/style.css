@@ -8,6 +8,9 @@
     background-color: darkorange; 
     color: beige;
     border-radius:4px;
+    position:sticky;
+    top:0;
+    width:100%;
 }
 
 .navbar-left,
@@ -36,18 +39,40 @@
     border-radius:25px;
 }
 
-.text-center {
+.content {
     width:90%;
     margin:auto;
 }
 
 .footer {
     padding-top:1%;
-    position:fixed;
-    bottom:0;
     width:100%;
     text-align: center;
     background-color: darkorange;
     color:beige;
     border-radius:4px;
+    position:fixed;
+    bottom:0;
+    line-height: 0.8;
+}
+
+.petitions-all a{
+    text-decoration: none;
+    color:black;
+}
+
+.petition-block {
+    padding: 1em;
+    margin:auto;
+    border-radius: 10px;
+}
+
+.petition-block:hover {
+    background-color: rgba(226, 129, 0, 0.12);
+}
+
+.petition-title {
+    font-size: larger;
+    font-weight:bold;
+    display:block;
 }
