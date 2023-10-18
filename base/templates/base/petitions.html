@@ -8,7 +8,10 @@
     <div>
         {% for petition in petitions %}
         <div>
-            <span>{{petition.title}}</span>
+            <span>{{petition.category}}<br></span>
+            <span>{{petition.author.username}}<br></span>
+            <span>{{petition.title}}<br></span>
+            <span>{{petition.last_updated}}<br></span>
             <hr>
         </div>
         {% endfor %}
