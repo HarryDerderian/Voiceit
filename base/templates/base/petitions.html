@@ -6,9 +6,8 @@
 
 <h1>Petitions</h1>
 <div class="petitions-all">
-
     {% for petition in petitions %}
-    <a href="{% url 'petitions' %}">
+    <a href="{% url 'petitions'%}">
     <div class="petition-block">
         <span class="petition-title">{{petition.title}}</span>
         <p>Category: {{petition.category}}</p>
@@ -17,7 +16,10 @@
     </a>
     <hr>
     {% endfor %}
-    
-    
 </div>
+<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&autoplay=1">
+    <button class="petition-button">
+        New Petition
+    </button>
+</a>
 {%endblock content%}

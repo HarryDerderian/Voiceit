@@ -1,19 +1,25 @@
+/* color variables */
 :root {
-    --navbar-primary: rgb(228,100,52);
-    --navbar-highlight: rgb(255, 127, 81);
-    --main-hover-bg: rgba(228,100,52, .25);
-    --subdued-yellow: rgb(212,172,100);
-    --subdued-red: rgb(204, 36, 52);
-    --subdued-blue: rgb(44, 76, 124);
+    --orange-bg: rgb(228,100,52);
+    --orange-light: rgb(255, 127, 81);
+    --orange-hover: rgba(228,100,52, .25);
+    --yellow-bg: rgb(212,172,100);
+    --red-bg: rgb(204, 36, 52);
+    --blue-bg: rgb(44, 76, 124);
+    --blue-light: rgb(80, 116, 170);
+    --light-black: #272727;
   }
+
+/* fonts */
 * {
     font-family: 'Roboto Flex','Calibri', Helvetica, Arial, sans-serif;
 }
 
+/* navbar */
 .navbar {
     display: flex;
     justify-content: space-between;
-    background-color: var(--navbar-primary); 
+    background-color: var(--orange-bg); 
     color: beige;
     border-radius:4px;
     position:sticky;
@@ -43,26 +49,20 @@
 
 .navbar a:hover {
     text-decoration: underline;
-    background-color: var(--navbar-highlight);
+    background-color: var(--orange-light);
     border-radius:25px;
 }
+
+/*end navbar*/
+/*content frame */
 
 .content {
     width:90%;
     margin:auto;
 }
 
-.footer {
-    padding-top:1%;
-    width:100%;
-    text-align: center;
-    background-color: var(--navbar-primary);
-    color:beige;
-    border-radius:4px;
-    position:fixed;
-    bottom:0;
-    line-height: 0.8;
-}
+/*end content frame*/
+/*petitions page*/
 
 .petitions-all a{
     text-decoration: none;
@@ -76,11 +76,39 @@
 }
 
 .petition-block:hover {
-    background-color:var(--main-hover-bg);
+    background-color:var(--orange-hover);
 }
 
 .petition-title {
     font-size: larger;
     font-weight:bold;
     display:block;
+}
+
+.petition-button {
+    border:none;
+    background-color: var(--blue-bg);
+    color:white;
+    padding: 1em;
+    float:right;
+    border-radius: 40px;
+}
+
+.petition-button:hover {
+    background-color: var(--blue-light);
+}
+
+/*end petitions page*/
+/*footer*/
+
+.footer {
+    padding-top:1%;
+    width:100%;
+    text-align: center;
+    color:var(--light-black);
+    background-color: var(--yellow-bg);
+    border-radius:4px;
+    position:fixed;
+    bottom:0;
+    line-height: 0.8;
 }
