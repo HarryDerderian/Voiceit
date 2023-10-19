@@ -15,6 +15,14 @@
     font-family: 'Roboto Flex','Calibri', Helvetica, Arial, sans-serif;
 }
 
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+}
+
 /* navbar */
 .navbar {
     display: flex;
