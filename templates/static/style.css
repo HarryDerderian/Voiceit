@@ -59,6 +59,7 @@ textarea {
     text-decoration: underline;
     background-color: var(--orange-light);
     border-radius:25px;
+    font-weight: bold;
 }
 
 /*end navbar*/
@@ -67,6 +68,7 @@ textarea {
 .content {
     width:90%;
     margin:auto;
+    margin-bottom:100px;
 }
 
 /*end content frame*/
@@ -104,6 +106,8 @@ textarea {
 
 .petition-button:hover {
     background-color: var(--blue-light);
+    text-decoration: underline;
+    font-weight: bold;
 }
 
 /*end petitions page*/
