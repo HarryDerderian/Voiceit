@@ -62,6 +62,43 @@ textarea {
     font-weight: bold;
 }
 
+/* Navbar small Screens */
+
+@media screen and (max-width:450px) {
+    .navbar {
+        justify-content: space-between;
+        background-color: var(--orange-bg); 
+        color: beige;
+        border-radius:4px;
+        position:sticky;
+        top:0;
+        width:100%;
+    }
+    
+    .navbar-left,
+    .navbar-right {
+        list-style: none;
+        padding: 0;
+        display: block;
+    }
+    
+    .navbar-right {
+        margin-left: auto;
+    }
+    
+    .navbar a {
+        display:block;
+        padding: 1em;
+        text-decoration: none;
+        color: beige;
+        margin: 0 15px;
+        border-radius:4px;
+        font-weight: bolder;
+        border:solid 1px;
+        background-color: var(--orange-light);
+    }
+}
+
 /*end navbar*/
 /*content frame */
 
