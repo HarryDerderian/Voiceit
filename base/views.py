@@ -3,8 +3,29 @@ from django.urls import path
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from . forms import PetitionForm
 # Create your views here.
 from . models import Petition, Category
+
+def create_petition(request) :
+    """
+        Brings the user to a page for building petitions.
+        Will ask for various input fields relating to a petition object.
+        Finally will store the new petition if the inputs are valid.
+    """
+    input_form = PetitionForm(request.POST)
+    context = {"form" : input_form}
+    if request.method == "POST" :
+        if input_form.is_valid() :
+                new_petition = input_form.save()
+                new_petition.author = request.user
+                new_petition.save()
+                return redirect('petitions')
+                
+    
+    return render(request, 'base/create-petition.html', context)
+
+
 
 def petitions(request) :
     # A list of all petition objects, and categories
