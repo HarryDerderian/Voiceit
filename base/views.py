@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from . models import Petition, Category
 
 # this neat little trick requires usesr to be signed in to view this page.
-@login_required(login_url = "login/")
+@login_required(login_url = "/login/")
 def create_petition(request) :
     """
         Brings the user to a page for building petitions.
@@ -33,6 +33,11 @@ def petitions(request) :
     if request.method == "POST" :
         print("IT WAS A POST REQUEST")
     return render(request, 'base/petitions.html', context)
+
+def petition(request, pk) :
+    petition = Petition.objects.get(id = pk)
+    context = {'petition': petition}
+    return render(request, 'base/petition.html', context)
 
 def logout_view(request):
     logout(request)
