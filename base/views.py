@@ -25,12 +25,12 @@ def create_petition(request) :
     
     return render(request, 'base/create-petition.html', context)
 
-
-
 def petitions(request) :
     # A list of all petition objects, and categories
     context = {"petitions" : Petition.objects.all(),
                "categories" : Category.objects.all() }
+    if request.method == "POST" :
+        print("IT WAS A POST REQUEST")
     return render(request, 'base/petitions.html', context)
 
 def logout_view(request):
