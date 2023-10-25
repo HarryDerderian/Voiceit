@@ -1,7 +1,163 @@
-.navbar {
-    list-style-type: disc;
+/* color variables */
+:root {
+    --orange-bg: rgb(228,100,52);
+    --orange-light: rgb(255, 127, 81);
+    --orange-hover: rgba(228,100,52, .25);
+    --yellow-bg: rgb(212,172,100);
+    --red-bg: rgb(204, 36, 52);
+    --blue-bg: rgb(44, 76, 124);
+    --blue-light: rgb(80, 116, 170);
+    --light-black: #272727;
+  }
+
+/* fonts */
+* {
+    font-family: 'Roboto Flex','Calibri', Helvetica, Arial, sans-serif;
 }
 
-.navbar button {
-    float: right;
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+}
+
+/* navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--orange-bg); 
+    color: beige;
+    border-radius:4px;
+    position:sticky;
+    top:0;
+    width:100%;
+}
+
+.navbar-left,
+.navbar-right {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+.navbar-right {
+    margin-left: auto;
+}
+
+.navbar a {
+    display:block;
+    padding: 1em;
+    text-decoration: none;
+    color: beige;
+    margin: 0 15px;
+    border-radius:25px;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+    background-color: var(--orange-light);
+    border-radius:25px;
+    font-weight: bold;
+}
+
+/* Navbar small Screens */
+
+@media screen and (max-width:450px) {
+    .navbar {
+        justify-content: space-between;
+        background-color: var(--orange-bg); 
+        color: beige;
+        border-radius:4px;
+        position:sticky;
+        top:0;
+        width:100%;
+    }
+    
+    .navbar-left,
+    .navbar-right {
+        list-style: none;
+        padding: 0;
+        display: block;
+    }
+    
+    .navbar-right {
+        margin-left: auto;
+    }
+    
+    .navbar a {
+        display:block;
+        padding: 1em;
+        text-decoration: none;
+        color: beige;
+        margin: 0 15px;
+        border-radius:4px;
+        font-weight: bolder;
+        border:solid 1px;
+        background-color: var(--orange-light);
+    }
+}
+
+/*end navbar*/
+/*content frame */
+
+.content {
+    width:90%;
+    margin:auto;
+    margin-bottom:100px;
+}
+
+/*end content frame*/
+/*petitions page*/
+
+.petitions-all a{
+    text-decoration: none;
+    color:black;
+}
+
+.petition-block {
+    padding: 1em;
+    margin:auto;
+    border-radius: 10px;
+}
+
+.petition-block:hover {
+    background-color:var(--orange-hover);
+}
+
+.petition-title {
+    font-size: larger;
+    font-weight:bold;
+    display:block;
+}
+
+.petition-button {
+    border:none;
+    background-color: var(--blue-bg);
+    color:white;
+    padding: 1em;
+    float:right;
+    border-radius: 40px;
+}
+
+.petition-button:hover {
+    background-color: var(--blue-light);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/*end petitions page*/
+/*footer*/
+
+.footer {
+    padding-top:1%;
+    width:100%;
+    text-align: center;
+    color:var(--light-black);
+    background-color: var(--yellow-bg);
+    border-radius:4px;
+    position:fixed;
+    bottom:0;
+    line-height: 0.8;
 }
