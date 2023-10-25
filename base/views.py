@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect
 from django.urls import path
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
+#from django.contrib.auth.forms import UserCreationForm
 from . forms import PetitionForm
 from django.contrib.auth.decorators import login_required
 from . models import Petition, Category
+from users.forms import SignUpForm
 
 # this neat little trick requires usesr to be signed in to view this page.
 @login_required(login_url = "/login/")
@@ -50,19 +51,7 @@ def aboutUs(request):
     return render(request, 'base/about.html')
 
 
-def registerPage(request) :
-    form = UserCreationForm()
-    if request.method == 'POST' :
-        form = UserCreationForm(request.POST)
-        if form.is_valid() :
-            user = form.save()
-            login(request, user)
-            return redirect('home')
-            form.save()
-            return redirect('login')
 
-    context = {'form' : form}
-    return render(request, 'base/register.html', context)
 
 def loginPage(request) :
     context = {}
@@ -74,3 +63,18 @@ def loginPage(request) :
             login(request, user)
             return redirect('home')
     return render(request, 'base/login.html', context)
+
+
+
+def registerPage(request) :
+    form = SignUpForm()
+    if request.method == 'POST' :
+        form = SignUpForm(request.POST)
+        if form.is_valid() :
+            user = form.save()
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(request, email=user.email, password=raw_password)
+            login(request, user)
+            return redirect('home')
+    context = {'form' : form}
+    return render(request, 'base/register.html', context)
