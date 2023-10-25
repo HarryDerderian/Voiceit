@@ -30,14 +30,15 @@ def petitions(request) :
     # A list of all petition objects, and categories
     context = {"petitions" : Petition.objects.all(),
                "categories" : Category.objects.all() }
-    if request.method == "POST" :
-        print("IT WAS A POST REQUEST")
     return render(request, 'base/petitions.html', context)
 
 def petition(request, pk) :
-    petition = Petition.objects.get(id = pk)
-    context = {'petition': petition}
-    return render(request, 'base/petition.html', context)
+    if Petition.objects.filter(id = pk).exists() :
+        context = {'petition': Petition.objects.get(id = pk)}
+        return render(request, 'base/petition.html', context)
+    else :
+         return redirect('petitions')
+
 
 def logout_view(request):
     logout(request)
