@@ -7,7 +7,7 @@
 <h1>Petitions</h1>
 <div class="petitions-all">
     {% for petition in petitions %}
-    <a href="{% url 'petitions'%}">
+    <a href="{% url 'petition' petition.id%}">
     <div class="petition-block">
         <span class="petition-title">{{petition.title}}</span>
         <p>Category: {{petition.category}}</p>
