@@ -4,9 +4,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from . forms import PetitionForm
-# Create your views here.
+from django.contrib.auth.decorators import login_required
 from . models import Petition, Category
 
+# this neat little trick requires usesr to be signed in to view this page.
+@login_required(login_url = "login/")
 def create_petition(request) :
     """
         Brings the user to a page for building petitions.
@@ -16,13 +18,12 @@ def create_petition(request) :
     input_form = PetitionForm(request.POST)
     context = {"form" : input_form}
     if request.method == "POST" :
+        # Checking if input is valid and a user is logged in.
         if input_form.is_valid() :
                 new_petition = input_form.save()
                 new_petition.author = request.user
                 new_petition.save()
                 return redirect('petitions')
-                
-    
     return render(request, 'base/create-petition.html', context)
 
 def petitions(request) :
