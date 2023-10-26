@@ -51,9 +51,6 @@ def home(request) :
 def aboutUs(request):
     return render(request, 'base/about.html')
 
-
-
-
 def loginPage(request) :
     context = {}
     if request.method == 'POST' :
@@ -64,8 +61,6 @@ def loginPage(request) :
             login(request, user)
             return redirect('home')
     return render(request, 'base/login.html', context)
-
-
 
 def registerPage(request) :
     form = SignUpForm()

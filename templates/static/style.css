@@ -148,6 +148,21 @@ textarea {
 }
 
 /*end petitions page*/
+
+/*petitions creation page*/
+.petition-form #id_title, #id_category, #id_description {
+    display:block;
+}
+
+.petition-form label {
+    font-size: larger;
+}
+
+.petition-form li {
+    visibility: hidden;
+}
+/*end petitions creation page */
+
 /*footer*/
 
 .footer {
@@ -160,4 +175,10 @@ textarea {
     position:fixed;
     bottom:0;
     line-height: 0.8;
+}
+/*footer small screens*/
+@media screen and (max-width:450px) {
+    .footer {
+
+    }
 }

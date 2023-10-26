@@ -1,4 +1,7 @@
+{% extends 'main.html' %}
+{% block content %}
 <h1>{{petition.title}}</h1>
-<p>({{petition.category}})</p>
-<p>{{petition.description}}</p>
+<h4>({{petition.category}})</h4>
+<p>{{petition.description | linebreaks}}</p>
 <p> - {{petition.author.username}}</p>
+{% endblock content %}
