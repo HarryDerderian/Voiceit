@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from voicelt.settings import AUTH_USER_MODEL
 # Create your models here.
 
 class Category(models.Model) :
@@ -11,7 +11,7 @@ class Category(models.Model) :
         return str(self.category_str)
 
 class Petition(models.Model) :
-    author = models.ForeignKey(User,  on_delete = models.SET_NULL, null = True)
+    author = models.ForeignKey(AUTH_USER_MODEL,  on_delete = models.SET_NULL, null = True)
     category = models.ForeignKey(Category,  on_delete = models.SET_NULL, null = True)
 
 
