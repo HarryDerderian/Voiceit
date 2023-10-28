@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import path
-from django.contrib.auth.models import User
+from  users.models import User
 from django.contrib.auth import authenticate, login, logout
 #from django.contrib.auth.forms import UserCreationForm
 from . forms import PetitionForm
@@ -40,7 +40,6 @@ def petition(request, pk) :
     else :
          return redirect('petitions')
 
-
 def logout_view(request):
     logout(request)
     return redirect('home')
@@ -69,8 +68,10 @@ def registerPage(request) :
         if form.is_valid() :
             user = form.save()
             raw_password = form.cleaned_data.get('password1')
-            user = authenticate(request, email=user.email, password=raw_password)
-            login(request, user)
+            user = authenticate(request, username = user.username, email=user.email, password=raw_password) 
+            if user is not None :
+                login(request, user)
+                
             return redirect('home')
     context = {'form' : form}
     return render(request, 'base/register.html', context)
