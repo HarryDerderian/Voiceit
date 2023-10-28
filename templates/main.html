@@ -15,12 +15,14 @@
         <meta name="viewport" content ='width=device-width, initial-scale=1'>
     </head>
     <body>
-        {% include 'navbar.html' %}
-        <div class="content">
-            {% block content %}
+        <div class="flex-wrapper">
+            {% include 'navbar.html' %}
+            <div class="content">
+                {% block content %}
 
-            {% endblock %}
+                {% endblock %}
+            </div>
+            {% include 'footer.html' %}
         </div>
-        {% include 'footer.html' %}
     </body>
 </html>
