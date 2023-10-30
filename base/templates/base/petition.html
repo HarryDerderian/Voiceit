@@ -2,16 +2,19 @@
 {% block content %}
 <h1>{{petition.title}}</h1>
 <h4>({{petition.category}})</h4>
+<h6>Posted by: {{petition.author.username}} at {{petition.creation_date}}</h6>
 <p>{{petition.description | linebreaks}}</p>
-<p> - {{petition.author.username}}</p>
+{% if request.user.is_authenticated or request.user.is_staff %}
+<a><button>Edit</button></a>
+{% endif %}
 <br>
-
+<hr>
 {% for reply in replies %}
+<h6>Posted By: {{reply.author.username}}</h6>
 <p>{{reply.description | linebreaks}}</p>
-<p> - {{reply.author.username}}</p>
 <br>
+<hr>
 {% endfor %}
-
-
-
+<textarea></textarea>
+<button>Submit</button>
 {% endblock content %}
