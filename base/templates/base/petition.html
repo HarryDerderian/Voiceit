@@ -4,4 +4,14 @@
 <h4>({{petition.category}})</h4>
 <p>{{petition.description | linebreaks}}</p>
 <p> - {{petition.author.username}}</p>
+<br>
+
+{% for reply in replies %}
+<p>{{reply.description | linebreaks}}</p>
+<p> - {{reply.author.username}}</p>
+<br>
+{% endfor %}
+
+
+
 {% endblock content %}

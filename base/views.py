@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 #from django.contrib.auth.forms import UserCreationForm
 from . forms import PetitionForm
 from django.contrib.auth.decorators import login_required
-from . models import Petition, Category
+from . models import Petition, Category, PetitionReply
 from users.forms import SignUpForm
 
 # this neat little trick requires usesr to be signed in to view this page.
@@ -35,7 +35,9 @@ def petitions(request) :
 
 def petition(request, pk) :
     if Petition.objects.filter(id = pk).exists() :
-        context = {'petition': Petition.objects.get(id = pk)}
+        requested_petition = Petition.objects.get(id = pk)
+        context = {'petition': requested_petition,
+        'replies' : PetitionReply.objects.filter(petition = requested_petition) }
         return render(request, 'base/petition.html', context)
     else :
          return redirect('petitions')
