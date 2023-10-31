@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.urls import path
 from  users.models import User
 from django.contrib.auth import authenticate, login, logout
-#from django.contrib.auth.forms import UserCreationForm
 from . forms import PetitionForm
 from django.contrib.auth.decorators import login_required
 from . models import Petition, Category, PetitionReply
@@ -35,13 +34,22 @@ def petitions(request) :
     return render(request, 'base/petitions.html', context)
 
 def petition(request, pk) :
-    if Petition.objects.filter(id = pk).exists() :
-        requested_petition = Petition.objects.get(id = pk)
-        context = {'petition': requested_petition,
-        'replies' : PetitionReply.objects.filter(petition = requested_petition) }
-        return render(request, 'base/petition.html', context)
-    else :
-         return redirect('petitions')
+    if request.method == "GET" :
+        if Petition.objects.filter(id = pk).exists() :
+            requested_petition = Petition.objects.get(id = pk)
+            context = {'petition': requested_petition,
+            'replies' : PetitionReply.objects.filter(petition = requested_petition) }
+            return render(request, 'base/petition.html', context)
+        else :
+            return redirect('petitions')
+    elif request.method == "POST" :
+        user =  request.user
+        comment = request.POST.get('reply')
+        current_petition = Petition.objects.get(id = pk)
+        reply = PetitionReply(author = user, description = comment, petition = current_petition)
+        reply.save()
+        return redirect('/petition/'+str(pk))
+
 
 @login_required(login_url = "/login/")
 def edit_petition(request, pk) :
@@ -55,8 +63,7 @@ def edit_petition(request, pk) :
     user = request.user
     # Confirm the current user is the author of the petition
     if not user == requested_petition.author :
-         messages.error(request, "unauthorized access")
-         
+         messages.error(request, "unauthorized access")         
          return redirect('petitions')
     else :
         update_form =  PetitionForm(instance=requested_petition)
@@ -67,10 +74,8 @@ def edit_petition(request, pk) :
             # Save the form to update the petition object
             update_form.save()
             return redirect('/petition/'+str(pk))
-
         context = {"form" : update_form ,"petition" : requested_petition}
         return render(request, 'base/petition-edit.html', context)
-
 
 def logout_view(request):
     logout(request)
