@@ -7,6 +7,7 @@ from . forms import PetitionForm
 from django.contrib.auth.decorators import login_required
 from . models import Petition, Category, PetitionReply
 from users.forms import SignUpForm
+from django.contrib import messages
 
 # this neat little trick requires usesr to be signed in to view this page.
 @login_required(login_url = "/login/")
@@ -41,6 +42,35 @@ def petition(request, pk) :
         return render(request, 'base/petition.html', context)
     else :
          return redirect('petitions')
+
+@login_required(login_url = "/login/")
+def edit_petition(request, pk) :
+    """Edits a petition, user must be logged in, 
+    and the creator of the petition. If the user is not logged in
+    or not the petition owner redirect them"""
+    # Confirm petition exists :
+    if not Petition.objects.filter(id = pk).exists() :
+         return redirect('petitions')
+    requested_petition = Petition.objects.get(id = pk)
+    user = request.user
+    # Confirm the current user is the author of the petition
+    if not user == requested_petition.author :
+         messages.error(request, "unauthorized access")
+         
+         return redirect('petitions')
+    else :
+        update_form =  PetitionForm(instance=requested_petition)
+        if request.method == "POST":
+        # Bind the form to the POST data
+            update_form = PetitionForm(request.POST, instance = requested_petition)
+        if update_form.is_valid():
+            # Save the form to update the petition object
+            update_form.save()
+            return redirect('/petition/'+str(pk))
+
+        context = {"form" : update_form ,"petition" : requested_petition}
+        return render(request, 'base/petition-edit.html', context)
+
 
 def logout_view(request):
     logout(request)
