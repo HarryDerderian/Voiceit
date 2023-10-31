@@ -65,7 +65,7 @@ def edit_petition(request, pk) :
     requested_petition = Petition.objects.get(id = pk)
     user = request.user
     # Confirm the current user is the author of the petition
-    if not user == requested_petition.author :
+    if not user == requested_petition.author:
          messages.error(request, "unauthorized access")         
          return redirect('petitions')
     else :
@@ -78,7 +78,7 @@ def edit_petition(request, pk) :
             update_form.save()
             return redirect('/petition/'+str(pk))
         context = {"form" : update_form ,"petition" : requested_petition}
-        return render(request, 'base/petition-edit.html', context)
+        return render(request, 'base/edit-petition.html', context)
 
 def logout_view(request):
     logout(request)
