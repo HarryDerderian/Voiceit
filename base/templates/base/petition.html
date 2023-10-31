@@ -1,23 +1,27 @@
 {% extends 'main.html' %}
 {% block content %}
-<h1>{{petition.title}}</h1>
-<h4>({{petition.category}})</h4>
-<h6>Posted by: {{petition.author.username}} at {{petition.creation_date}}</h6>
-<p>{{petition.description | linebreaks}}</p>
-{% if request.user.is_authenticated%}
-<a href="{% url 'edit-petition' pk=petition.pk%}"><button>Edit</button></a>
-{% endif %}
-<br>
-<hr>
-{% for reply in replies %}
-<h6>Posted By: {{reply.author.username}}</h6>
-<p>{{reply.description | linebreaks}}</p>
-<br>
-<hr>
-{% endfor %}
-<form method="post">
-    {% csrf_token %}
-    <input type="text" name="reply">
-    <button type="submit">Submit</button>
-</form>
+<div class="petition-view">
+    <h1>{{petition.title}}</h1>
+    <h4>({{petition.category}})</h4>
+    <h6>Posted by: {{petition.author.username}} at {{petition.creation_date}}</h6>
+    <p>{{petition.description | linebreaks}}</p>
+    {% if request.user.is_authenticated%}
+    <a href="{% url 'edit-petition' pk=petition.pk%}">
+        <button class="petition-button">Edit Petition</button>
+    </a>
+    {% endif %}
+    <br>
+    <hr>
+    {% for reply in replies %}
+    <h6>Posted By: {{reply.author.username}}</h6>
+    <p>{{reply.description | linebreaks}}</p>
+    <br>
+    <hr>
+    {% endfor %}
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="reply">
+        <button type="submit">Submit</button>
+    </form>
+</div>
 {% endblock content %}

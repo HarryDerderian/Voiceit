@@ -67,7 +67,6 @@ textarea {
     text-decoration: underline;
     background-color: var(--orange-light);
     border-radius:25px;
-    font-weight: bold;
 }
 
 /* Navbar small Screens */
@@ -110,7 +109,6 @@ textarea {
         text-decoration: underline;
         background-color: var(--orange-light);
         border-radius:4px;
-        font-weight: bold;
     }
 }
 
@@ -159,10 +157,14 @@ textarea {
 .petition-button:hover {
     background-color: var(--blue-light);
     text-decoration: underline;
-    font-weight: bold;
 }
-
 /*end petitions page*/
+
+/*petition view page*/
+.petition-view .petition-button + hr {
+    margin-top: 40px;
+}
+/*end petition view page*/
 
 /*petitions creation page*/
 .petition-form #id_title, #id_category, #id_description {
@@ -177,6 +179,20 @@ textarea {
     visibility: hidden;
 }
 /*end petitions creation page */
+
+/*petition edit page */
+.edit-petition-form #id_title, #id_category, #id_description {
+    display:block;
+}
+
+.edit-petition-form {
+    font-size: medium;
+}
+
+.edit-peitition-form label {
+    font-size: larger;
+}
+
 
 /*footer*/
 
