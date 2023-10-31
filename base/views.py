@@ -43,12 +43,15 @@ def petition(request, pk) :
         else :
             return redirect('petitions')
     elif request.method == "POST" :
-        user =  request.user
-        comment = request.POST.get('reply')
-        current_petition = Petition.objects.get(id = pk)
-        reply = PetitionReply(author = user, description = comment, petition = current_petition)
-        reply.save()
-        return redirect('/petition/'+str(pk))
+        if request.user.is_authenticated:
+            user =  request.user
+            comment = request.POST.get('reply')
+            current_petition = Petition.objects.get(id = pk)
+            reply = PetitionReply(author = user, description = comment, petition = current_petition)
+            reply.save()
+            return redirect('/petition/'+str(pk))
+        else :
+            return redirect("/login/")
 
 
 @login_required(login_url = "/login/")
