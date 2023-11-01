@@ -164,6 +164,11 @@ textarea {
 .petition-view .petition-button + hr {
     margin-top: 40px;
 }
+
+.wide-textbox {
+    width:90%;
+    height:5em;
+}
 /*end petition view page*/
 
 /*petitions creation page*/
