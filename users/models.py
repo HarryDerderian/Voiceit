@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
@@ -31,9 +32,18 @@ class UserManager(BaseUserManager):
     return user
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+
+
+
+class User(AbstractBaseUser, PermissionsMixin) :
     # Require both email and username
-    email = models.EmailField(max_length=254, unique=True)
+    # We only want @csu.fullerton emails...
+    # Lets work on that, the docs talk about a EmailValidator...
+    def csuf_email_validator(value):
+      if not value.endswith('@csu.fullerton.edu'):
+        raise ValidationError("Only @csu.fullerton.edu email addresses are allowed.")
+  
+    email = models.EmailField(max_length=254, unique=True, validators = [csuf_email_validator])
     username = models.CharField(max_length=254, unique=True)
 
     is_staff = models.BooleanField(default=False)
