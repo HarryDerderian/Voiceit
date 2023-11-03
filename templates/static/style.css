@@ -1,0 +1,225 @@
+/* color variables */
+:root {
+    --orange-bg: rgb(228,100,52);
+    --orange-light: rgb(255, 127, 81);
+    --orange-hover: rgba(228,100,52, .25);
+    --yellow-bg: rgb(212,172,100);
+    --red-bg: rgb(204, 36, 52);
+    --blue-bg: rgb(44, 76, 124);
+    --blue-light: rgb(80, 116, 170);
+    --light-black: #272727;
+  }
+
+/* fonts */
+* {
+    font-family: 'Roboto Flex','Calibri', Helvetica, Arial, sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+}
+/* whole site wrapper */
+.flex-wrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+/* navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--orange-bg); 
+    color: beige;
+    border-bottom-left-radius:4px;
+    border-bottom-right-radius:4px;
+    position:sticky;
+    top:0;
+    width:100%;
+}
+
+.navbar-left,
+.navbar-right {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+.navbar-right {
+    margin-left: auto;
+}
+
+.navbar a {
+    display:block;
+    padding: 1em;
+    text-decoration: none;
+    color: beige;
+    margin: 0 15px;
+    border-radius:25px;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+    background-color: var(--orange-light);
+    border-radius:25px;
+}
+
+/* Navbar small Screens */
+
+@media screen and (max-width:450px) {
+    .navbar {
+        justify-content: space-between;
+        background-color: var(--orange-bg); 
+        color: beige;
+        border-radius:4px;
+        position:sticky;
+        top:0;
+        width:100%;
+    }
+    
+    .navbar-left,
+    .navbar-right {
+        list-style: none;
+        padding: 0;
+        display: block;
+    }
+    
+    .navbar-right {
+        margin-left: auto;
+    }
+    
+    .navbar a {
+        display:block;
+        padding: 1em;
+        text-decoration: none;
+        color: beige;
+        margin: 0 15px;
+        border-radius:4px;
+        font-weight: bolder;
+        border:solid 1px;
+        background-color: var(--orange-light);
+    }
+
+    .navbar a:hover {
+        text-decoration: underline;
+        background-color: var(--orange-light);
+        border-radius:4px;
+    }
+}
+
+/*end navbar*/
+/*content frame */
+
+.content {
+    width:90%;
+    margin:auto;
+    margin-bottom:150px;
+}
+
+/*end content frame*/
+/*petitions page*/
+
+.petitions-all a{
+    text-decoration: none;
+    color:black;
+}
+
+.petition-block {
+    padding: 1em;
+    margin:auto;
+    border-radius: 10px;
+}
+
+.petition-block:hover {
+    background-color:var(--orange-hover);
+}
+
+.petition-title {
+    font-size: larger;
+    font-weight:bold;
+    display:block;
+}
+
+.petition-button {
+    border:none;
+    background-color: var(--blue-bg);
+    color:white;
+    padding: 1em;
+    float:right;
+    border-radius: 40px;
+}
+
+.petition-button:hover {
+    background-color: var(--blue-light);
+    text-decoration: underline;
+}
+/*end petitions page*/
+
+/*petition view page*/
+.petition-view .petition-button + hr {
+    margin-top: 40px;
+}
+
+.wide-textbox {
+    width:90%;
+    height:5em;
+}
+/*end petition view page*/
+
+/*petitions creation page*/
+.petition-form #id_title, #id_category, #id_description {
+    display:block;
+}
+
+.petition-form label {
+    font-size: larger;
+}
+
+.petition-form li {
+    visibility: hidden;
+}
+/*end petitions creation page */
+
+/*petition edit page */
+.edit-petition-form #id_title, #id_category, #id_description {
+    display:block;
+}
+
+.edit-petition-form {
+    font-size: medium;
+}
+
+.edit-peitition-form label {
+    font-size: larger;
+}
+
+
+/*footer*/
+
+.footer {
+    padding-top:1%;
+    width:100%;
+    text-align: center;
+    color:var(--light-black);
+    background-color: var(--yellow-bg);
+    border-top-right-radius:4px;
+    border-top-left-radius:4px;
+    padding-bottom: 10px;
+    line-height: 0.8;
+    margin-top: auto;
+}
+/*footer small screens*/
+@media screen and (max-width:500px) {
+    .footer {
+
+    }
+    
+    .content {
+        margin-bottom:200px;
+    }
+}

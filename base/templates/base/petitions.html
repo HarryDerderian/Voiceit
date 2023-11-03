@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<h1>Petitions</h1>
+<div class="petitions-all">
+    {% for petition in petitions %}
+    <a href="{% url 'petition' petition.id%}">
+    <div class="petition-block">
+        <span class="petition-title">{{petition.title}}</span>
+        <p>Category: {{petition.category}}</p>
+        <p>{{petition.author.username}}: {{petition.last_updated}}</p>
+    </div>
+    </a>
+    <hr>
+    {% endfor %}
+</div>
+<a href="{% url 'create-petition' %}">
+    <button class="petition-button">
+        New Petition
+    </button>
+</a>
+{%endblock content%}
