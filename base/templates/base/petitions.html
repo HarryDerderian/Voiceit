@@ -1,9 +1,6 @@
 {% extends 'main.html' %}
 
 {% block content %}
-
-
-
 <h1>Petitions</h1>
 <div class="petitions-all">
     {% for petition in petitions %}
@@ -19,7 +16,6 @@
 </div>
 <a href="{% url 'create-petition' %}">
     <button class="petition-button">
-       
         New Petition
     </button>
 </a>

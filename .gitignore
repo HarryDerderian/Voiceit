@@ -1,3 +1,2 @@
-base/__pycache__/
-base/migrations/__pycache__/
-voicelt/__pycache__/
+*__pycache__/*
+*.pyc

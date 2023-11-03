@@ -1,4 +1,31 @@
-<h1>{{petition.title}}</h1>
-<p>({{petition.category}})</p>
-<p>{{petition.description}}</p>
-<p> - {{petition.author.username}}</p>
+{% extends 'main.html' %}
+{% block content %}
+<div class="petition-view">
+    <h1>{{petition.title}}</h1>
+    {% if request.user.is_authenticated%}
+    <a href="{% url 'edit-petition' pk=petition.pk%}">
+        <button class="petition-button">Edit Petition</button>
+    </a>
+    {% endif %}
+    <h4>({{petition.category}})</h4>
+    <h6>Posted by: {{petition.author.username}} at {{petition.creation_date}}</h6>
+    
+    <p>{{petition.description}}</p>
+    <p>Signature goal: {{petition.signature_goal}}</p>
+    <p>Total signatures: {{petition.total_signatures}}</p>
+
+    <br>
+    <hr>
+    {% for reply in replies %}
+    <h6>Posted By: {{reply.author.username}}</h6>
+    <p>{{reply.description | linebreaks}}</p>
+    <br>
+    <hr>
+    {% endfor %}
+    <form method="post">
+        {% csrf_token %}
+        <textarea type="text" name="reply" class="wide-textbox"></textarea>
+        <button type="submit" class="petition-button">Submit</button>
+    </form>
+</div>
+{% endblock content %}

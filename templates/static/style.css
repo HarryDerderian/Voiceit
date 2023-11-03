@@ -22,6 +22,13 @@ textarea {
   font-family: inherit;
   font-size: 100%;
 }
+/* whole site wrapper */
+.flex-wrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 
 /* navbar */
 .navbar {
@@ -29,7 +36,8 @@ textarea {
     justify-content: space-between;
     background-color: var(--orange-bg); 
     color: beige;
-    border-radius:4px;
+    border-bottom-left-radius:4px;
+    border-bottom-right-radius:4px;
     position:sticky;
     top:0;
     width:100%;
@@ -59,7 +67,6 @@ textarea {
     text-decoration: underline;
     background-color: var(--orange-light);
     border-radius:25px;
-    font-weight: bold;
 }
 
 /* Navbar small Screens */
@@ -97,6 +104,12 @@ textarea {
         border:solid 1px;
         background-color: var(--orange-light);
     }
+
+    .navbar a:hover {
+        text-decoration: underline;
+        background-color: var(--orange-light);
+        border-radius:4px;
+    }
 }
 
 /*end navbar*/
@@ -105,7 +118,7 @@ textarea {
 .content {
     width:90%;
     margin:auto;
-    margin-bottom:100px;
+    margin-bottom:150px;
 }
 
 /*end content frame*/
@@ -144,10 +157,48 @@ textarea {
 .petition-button:hover {
     background-color: var(--blue-light);
     text-decoration: underline;
-    font-weight: bold;
+}
+/*end petitions page*/
+
+/*petition view page*/
+.petition-view .petition-button + hr {
+    margin-top: 40px;
 }
 
-/*end petitions page*/
+.wide-textbox {
+    width:90%;
+    height:5em;
+}
+/*end petition view page*/
+
+/*petitions creation page*/
+.petition-form #id_title, #id_category, #id_description {
+    display:block;
+}
+
+.petition-form label {
+    font-size: larger;
+}
+
+.petition-form li {
+    visibility: hidden;
+}
+/*end petitions creation page */
+
+/*petition edit page */
+.edit-petition-form #id_title, #id_category, #id_description {
+    display:block;
+}
+
+.edit-petition-form {
+    font-size: medium;
+}
+
+.edit-peitition-form label {
+    font-size: larger;
+}
+
+
 /*footer*/
 
 .footer {
@@ -156,8 +207,19 @@ textarea {
     text-align: center;
     color:var(--light-black);
     background-color: var(--yellow-bg);
-    border-radius:4px;
-    position:fixed;
-    bottom:0;
+    border-top-right-radius:4px;
+    border-top-left-radius:4px;
+    padding-bottom: 10px;
     line-height: 0.8;
+    margin-top: auto;
+}
+/*footer small screens*/
+@media screen and (max-width:500px) {
+    .footer {
+
+    }
+    
+    .content {
+        margin-bottom:200px;
+    }
 }
