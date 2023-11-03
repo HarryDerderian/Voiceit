@@ -53,6 +53,11 @@ def petition(request, pk) :
         else :
             return redirect("/login/")
 
+# SIGN/UNSIGN
+# GET USER, GET PETITON, UPDATE PETITION SIGNATURE COUNT
+# CREATE/REMOVE SIGNATURE OBJECT
+
+
 
 @login_required(login_url = "/login/")
 def edit_petition(request, pk) :
