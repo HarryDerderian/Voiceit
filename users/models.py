@@ -31,10 +31,6 @@ class UserManager(BaseUserManager):
     user=self._create_user(email, username, password, True, True, **extra_fields)
     return user
 
-
-
-
-
 class User(AbstractBaseUser, PermissionsMixin) :
     # Require both email and username
     # We only want @csu.fullerton emails...
@@ -45,7 +41,6 @@ class User(AbstractBaseUser, PermissionsMixin) :
   
     email = models.EmailField(max_length=254, unique=True, validators = [csuf_email_validator])
     username = models.CharField(max_length=254, unique=True)
-
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

@@ -10,8 +10,10 @@
     <h4>({{petition.category}})</h4>
     <h6>Posted by: {{petition.author.username}} at {{petition.creation_date}}</h6>
     
-    <p>{{petition.description | linebreaks}}</p>
-    
+    <p>{{petition.description}}</p>
+    <p>Signature goal: {{petition.signature_goal}}</p>
+    <p>Total signatures: {{petition.total_signatures}}</p>
+
     <br>
     <hr>
     {% for reply in replies %}
