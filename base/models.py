@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from voicelt.settings import AUTH_USER_MODEL
+import uuid
 # Create your models here.
 
 class Category(models.Model) :
@@ -10,7 +11,8 @@ class Category(models.Model) :
         return str(self.category_str)
 
 class Petition(models.Model) :
-    author = models.ForeignKey(AUTH_USER_MODEL,  on_delete = models.SET_NULL, null = True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    author = models.ForeignKey(AUTH_USER_MODEL, on_delete = models.CASCADE, null = True)
     category = models.ForeignKey(Category,  on_delete = models.SET_NULL, null = True)
     signature_goal = models.PositiveIntegerField(null = True, blank = True)
     total_signatures = models.PositiveIntegerField(null = True, blank = True)
@@ -25,15 +27,17 @@ class Petition(models.Model) :
         return str(self.title)
 
 class Signature(models.Model) :
-    owner = models.ForeignKey(AUTH_USER_MODEL,  on_delete = models.SET_NULL, null = True)
-    petition = models.ForeignKey(Petition, on_delete = models.SET_NULL, null = True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    owner = models.ForeignKey(AUTH_USER_MODEL, on_delete = models.CASCADE, null = True)
+    petition = models.ForeignKey(Petition, on_delete = models.CASCADE, null = True)
 
 
 class PetitionReply(models.Model) :
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     # The author of the reply
-    author = models.ForeignKey(AUTH_USER_MODEL,  on_delete = models.SET_NULL, null = True)
+    author = models.ForeignKey(AUTH_USER_MODEL, on_delete = models.CASCADE, null = True)
     # The petition the reply belongs to
-    petition = models.ForeignKey(Petition, on_delete = models.SET_NULL, null = True)
+    petition = models.ForeignKey(Petition, on_delete = models.CASCADE, null = True)
     # The message of the relpy
     ALLOW_EMPTY_TEXT = False
     description = models.TextField(null = ALLOW_EMPTY_TEXT, blank = ALLOW_EMPTY_TEXT)
