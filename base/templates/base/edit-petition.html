@@ -4,6 +4,7 @@
 
     <form method ='POST' class="edit-petition-form"> {% csrf_token %}
         {{form.as_p}}
+        <!--Description Textbox size-->
         <input type = 'submit' value = 'Submit' />
     </form>
 {% endblock content %}

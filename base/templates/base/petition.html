@@ -2,7 +2,7 @@
 {% block content %}
 <div class="petition-view">
     <h1>{{petition.title}}</h1>
-    {% if request.user.is_authenticated%}
+    {% if request.user == request.petition.author%}
     <a href="{% url 'edit-petition' pk=petition.pk%}">
         <button class="petition-button">Edit Petition</button>
     </a>
@@ -13,10 +13,11 @@
     <p>{{petition.description}}</p>
     <p>Signature goal: {{petition.signature_goal}}</p>
     <p>Total signatures: {{petition.total_signatures}}</p>
-
+    <!--Sign petition, small textbox and button-->
     <br>
     <hr>
     {% for reply in replies %}
+    <!--Change how comments look compared to main petition-->
     <h6>Posted By: {{reply.author.username}}</h6>
     <p>{{reply.description | linebreaks}}</p>
     <br>
