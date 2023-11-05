@@ -9,7 +9,7 @@ from users.forms import SignUpForm
 from django.contrib import messages
 
 # this neat little trick requires usesr to be signed in to view this page.
-@login_required(login_url = "/login/")
+@login_required(login_url = "/login/?previous=/create-petition/")
 def create_petition(request) :
     """
         Brings the user to a page for building petitions.
