@@ -13,13 +13,14 @@ class Category(models.Model) :
 class Petition(models.Model) :
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     author = models.ForeignKey(AUTH_USER_MODEL, on_delete = models.CASCADE, null = True)
-    category = models.ForeignKey(Category,  on_delete = models.SET_NULL, null = True)
+    default_category = Category.objects.get(category_str="Other")
+    category = models.ForeignKey(Category,  on_delete = models.CASCADE, null = False, blank = False,default=default_category.pk)
     signature_goal = models.PositiveIntegerField(null = True, blank = True)
     total_signatures = models.PositiveIntegerField(default = 0, null = True, blank = True)
     TITLE_CHAR_LIMIT = 70
-    title = models.CharField(max_length = TITLE_CHAR_LIMIT)
-    ALLOW_EMPTY_TEXT = True
-    description = models.TextField(null = ALLOW_EMPTY_TEXT, blank = ALLOW_EMPTY_TEXT)
+    title = models.CharField(max_length = TITLE_CHAR_LIMIT, null=False, blank = False)
+    ALLOW_EMPTY_TEXT = False
+    description = models.TextField(null = ALLOW_EMPTY_TEXT, blank = ALLOW_EMPTY_TEXT, default="No description given.")
     last_updated = models.DateTimeField(auto_now = True)
     creation_date = models.DateTimeField(auto_now_add = True)
     # Petition class as a String
