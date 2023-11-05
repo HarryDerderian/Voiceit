@@ -15,7 +15,7 @@ class Petition(models.Model) :
     author = models.ForeignKey(AUTH_USER_MODEL, on_delete = models.CASCADE, null = True)
     category = models.ForeignKey(Category,  on_delete = models.SET_NULL, null = True)
     signature_goal = models.PositiveIntegerField(null = True, blank = True)
-    total_signatures = models.PositiveIntegerField(null = True, blank = True)
+    total_signatures = models.PositiveIntegerField(default = 0, null = True, blank = True)
     TITLE_CHAR_LIMIT = 70
     title = models.CharField(max_length = TITLE_CHAR_LIMIT)
     ALLOW_EMPTY_TEXT = True
