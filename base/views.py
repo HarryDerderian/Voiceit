@@ -51,7 +51,8 @@ def petition(request, pk) :
             reply.save()
             return redirect('/petition/'+str(pk))
         else :
-            return redirect("/login/")
+            redirect_path = '/petition/'+str(pk)
+            return redirect("/login/?previous=" + redirect_path)
 
 # SIGN/UNSIGN
 # GET USER, GET PETITON, UPDATE PETITION SIGNATURE COUNT
@@ -95,15 +96,16 @@ def home(request) :
 def aboutUs(request):
     return render(request, 'base/about.html')
 
-def loginPage(request) :
+def loginPage(request, redirect_path = 'home') :
     context = {}
+    redirect_path = request.GET.get('previous', 'home')
     if request.method == 'POST' :
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username = username, password = password)
         if user is not None :
             login(request, user)
-            return redirect('home')
+            return redirect(redirect_path)
     return render(request, 'base/login.html', context)
 
 def registerPage(request) :
