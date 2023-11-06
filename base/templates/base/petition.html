@@ -13,7 +13,13 @@
     <p>{{petition.description}}</p>
     <p>Signature goal: {{petition.signature_goal}}</p>
     <p>Total signatures: {{petition.total_signatures}}</p>
-    <!--Sign petition, small textbox and button-->
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" id="name" name="name" required minlength="4" maxlength="20" size="10" />        
+        <p><small>By checking this box you accept the TOS blah blah blah</small></p>
+        <input type="checkbox" id="tosaccept" name="tosaccept"/>
+        <button type="submit">Sign Now</button>
+    </form>
     <br>
     <hr>
     {% for reply in replies %}
