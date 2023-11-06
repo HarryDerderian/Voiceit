@@ -2,7 +2,7 @@
 {% block content %}
 <div class="petition-view">
     <h1>{{petition.title}}</h1>
-    {% if request.user == request.petition.author%}
+    {% if request.user == petition.author%}
     <a href="{% url 'edit-petition' pk=petition.pk%}">
         <button class="petition-button">Edit Petition</button>
     </a>
