@@ -31,7 +31,7 @@ def create_petition(request) :
                 # IF YOU CAN FIND A WAY BE MY GUESS
                 email_message = f"""Dear {new_petition.author.username},
 
-Congratulations on creating your petition {new_petition.title}, on Voicelt! You've taken the first step toward making a positive change on your campus.
+Congratulations on creating your petition: {new_petition.title}, on Voicelt! You've taken the first step toward making a positive change on your campus.
 
 Now, it's time to gather signatures and build support for your cause. Share your petition with fellow students, friends, and colleagues to help it gain momentum. When you reach your signature goal, we'll notify you with a special message of achievement.
 
