@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from . models import Petition, Category, PetitionReply
 from users.forms import SignUpForm
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
 
 # this neat little trick requires usesr to be signed in to view this page.
 @login_required(login_url = "/login/?previous=/create-petition/")
@@ -24,7 +26,29 @@ def create_petition(request) :
                 new_petition = input_form.save()
                 new_petition.author = request.user
                 new_petition.save()
-                return redirect('petitions')
+                email_subject = "Your Voicelt Petition Has Been Created"
+                # I KNOW ITS UGLY BUT IDK HOW TO FORMAT IT WITHOUT IT LOOKING OUT OF PLACE
+                # IF YOU CAN FIND A WAY BE MY GUESS
+                email_message = f"""Dear {new_petition.author.username},
+
+Congratulations on creating your petition {new_petition.title}, on Voicelt! You've taken the first step toward making a positive change on your campus.
+
+Now, it's time to gather signatures and build support for your cause. Share your petition with fellow students, friends, and colleagues to help it gain momentum. When you reach your signature goal, we'll notify you with a special message of achievement.
+
+Thank you for being an active member of the Voicelt community and for your dedication to making a local impact. Your voice matters, and together, we can create meaningful change on campus.
+
+Best of luck with your petition, and keep up the great work!
+
+Sincerely,
+The Voicelt Team"""
+                send_mail(
+                            email_subject,
+                            email_message,
+                            settings.EMAIL_HOST_USER,
+                            [new_petition.author.email],
+                            fail_silently=False,
+                        )
+                return redirect('/petition/'+ str(new_petition.id))
     return render(request, 'base/create-petition.html', context)
 
 def petitions(request) :
@@ -118,7 +142,29 @@ def registerPage(request) :
             user = authenticate(request, username = user.username, email=user.email, password=raw_password) 
             if user is not None :
                 login(request, user)
-                
+                email_subject = "Welcome to Voicelt - Empower Your Campus Voice"
+                # I KNOW ITS UGLY BUT IDK HOW TO FORMAT IT WITHOUT IT LOOKING OUT OF PLACE
+                # IF YOU CAN FIND A WAY BE MY GUESS
+                email_message = f"""Dear {user.username},
+
+Welcome to Voicelt, your platform for creating change on campus. With Voicelt, you can:
+
+- Create petitions for campus issues.
+- Collect signatures from like-minded students.
+- Make a local impact.
+
+Join us in bringing positive change to your college. Start now!
+
+Sincerely,
+The Voicelt Team
+"""
+                send_mail(
+                            email_subject,
+                            email_message,
+                            settings.EMAIL_HOST_USER,
+                            [user.email],
+                            fail_silently=False,
+                        )
             return redirect('home')
     context = {'form' : form}
     return render(request, 'base/register.html', context)
