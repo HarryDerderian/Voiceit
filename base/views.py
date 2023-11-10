@@ -7,8 +7,7 @@ from django.contrib.auth.decorators import login_required
 from . models import Petition, Category, PetitionReply, Signature
 from users.forms import SignUpForm
 from django.contrib import messages
-from django.core.mail import send_mail
-from django.conf import settings
+from . import emailer
 
 # this neat little trick requires usesr to be signed in to view this page.
 @login_required(login_url = "/login/?previous=/create-petition/")
@@ -26,6 +25,9 @@ def create_petition(request) :
                 new_petition = input_form.save()
                 new_petition.author = request.user
                 new_petition.save()
+                # Send an email to the user confirming the creation of the petition.
+                emailer.petition_created_email(new_petition.author.username, 
+                                               new_petition.author.email, new_petition.title)
                 return redirect('/petition/'+ str(new_petition.id))
     return render(request, 'base/create-petition.html', context)
 
@@ -159,6 +161,8 @@ def registerPage(request) :
             user = authenticate(request, username = user.username, email=user.email, password=raw_password) 
             if user is not None :
                 login(request, user)
+                # Send an email to the user welcoming them to the website.
+                emailer.welcome_email(user.username, user.email)
             return redirect('home')
     context = {'form' : form}
     return render(request, 'base/register.html', context)
