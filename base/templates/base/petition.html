@@ -15,6 +15,7 @@
     <p>Total signatures: {{petition.total_signatures}}</p>
     <form method="post">
         {% csrf_token %}
+        <input type="hidden" name="form_type" value="sign_petition">
         <input type="text" id="name" name="name" required minlength="4" maxlength="20" size="10" />        
         <p><small>By checking this box you accept the TOS blah blah blah</small></p>
         <input type="checkbox" id="tosaccept" name="tosaccept"/>
@@ -31,6 +32,7 @@
     {% endfor %}
     <form method="post">
         {% csrf_token %}
+        <input type="hidden" name="form_type" value="submit_reply">
         <textarea type="text" name="reply" class="wide-textbox"></textarea>
         <button type="submit" class="petition-button">Submit</button>
     </form>

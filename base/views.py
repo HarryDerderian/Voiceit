@@ -4,7 +4,7 @@ from  users.models import User
 from django.contrib.auth import authenticate, login, logout
 from . forms import PetitionForm
 from django.contrib.auth.decorators import login_required
-from . models import Petition, Category, PetitionReply
+from . models import Petition, Category, PetitionReply, Signature
 from users.forms import SignUpForm
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -26,28 +26,6 @@ def create_petition(request) :
                 new_petition = input_form.save()
                 new_petition.author = request.user
                 new_petition.save()
-                email_subject = "Your Voicelt Petition Has Been Created"
-                # I KNOW ITS UGLY BUT IDK HOW TO FORMAT IT WITHOUT IT LOOKING OUT OF PLACE
-                # IF YOU CAN FIND A WAY BE MY GUESS
-                email_message = f"""Dear {new_petition.author.username},
-
-Congratulations on creating your petition: {new_petition.title}, on Voicelt! You've taken the first step toward making a positive change on your campus.
-
-Now, it's time to gather signatures and build support for your cause. Share your petition with fellow students, friends, and colleagues to help it gain momentum. When you reach your signature goal, we'll notify you with a special message of achievement.
-
-Thank you for being an active member of the Voicelt community and for your dedication to making a local impact. Your voice matters, and together, we can create meaningful change on campus.
-
-Best of luck with your petition, and keep up the great work!
-
-Sincerely,
-The Voicelt Team"""
-                send_mail(
-                            email_subject,
-                            email_message,
-                            settings.EMAIL_HOST_USER,
-                            [new_petition.author.email],
-                            fail_silently=False,
-                        )
                 return redirect('/petition/'+ str(new_petition.id))
     return render(request, 'base/create-petition.html', context)
 
@@ -58,25 +36,54 @@ def petitions(request) :
     return render(request, 'base/petitions.html', context)
 
 def petition(request, pk) :
+    # Check if the request method is GET
     if request.method == "GET" :
         if Petition.objects.filter(id = pk).exists() :
+            # Retrieve the requested petition
             requested_petition = Petition.objects.get(id = pk)
+            # Prepare context with the requested petition and its replies
             context = {'petition': requested_petition,
             'replies' : PetitionReply.objects.filter(petition = requested_petition) }
+            # Render the petition.html template with the prepared context
             return render(request, 'base/petition.html', context)
         else :
+            # Redirect to the 'petitions' page if the requested petition does not exist
             return redirect('petitions')
+    
+    # Check if the request method is POST
     elif request.method == "POST" :
+        # Check if the user is authenticated
         if request.user.is_authenticated:
-            user =  request.user
-            comment = request.POST.get('reply')
-            current_petition = Petition.objects.get(id = pk)
-            reply = PetitionReply(author = user, description = comment, petition = current_petition)
-            reply.save()
-            return redirect('/petition/'+str(pk))
+            # Get the form triggering POST: signature, or reply.
+            form_type = request.POST.get('form_type')
+            # Check if the form type is for submitting a reply
+            if form_type ==  "submit_reply":
+                # Get user, comment, and the current petition
+                user =  request.user
+                comment = request.POST.get('reply')
+                current_petition = Petition.objects.get(id = pk)
+                # Create a new reply and save it
+                reply = PetitionReply(author = user, description = comment, petition = current_petition)
+                reply.save()
+                # Redirect to the petition page after submitting the reply
+                return redirect('/petition/'+str(pk))
+            # Check if the form type is for signing a petition
+            elif form_type == "sign_petition" :
+                # Get user and the petition to be signed
+                user = request.user
+                signed_petition = Petition.objects.get(id = pk)
+                # Create a new signature and save it
+                signature = Signature(owner = user, petition = signed_petition)
+                signature.save()
+                # Redirect to the petition page after signing
+                return redirect('/petition/'+str(pk))
+        # Redirect to the login page if the user is not authenticated
         else :
             redirect_path = '/petition/'+str(pk)
             return redirect("/login/?previous=" + redirect_path)
+
+
+
 
 # SIGN/UNSIGN
 # GET USER, GET PETITON, UPDATE PETITION SIGNATURE COUNT
@@ -142,29 +149,6 @@ def registerPage(request) :
             user = authenticate(request, username = user.username, email=user.email, password=raw_password) 
             if user is not None :
                 login(request, user)
-                email_subject = "Welcome to Voicelt - Empower Your Campus Voice"
-                # I KNOW ITS UGLY BUT IDK HOW TO FORMAT IT WITHOUT IT LOOKING OUT OF PLACE
-                # IF YOU CAN FIND A WAY BE MY GUESS
-                email_message = f"""Dear {user.username},
-
-Welcome to Voicelt, your platform for creating change on campus. With Voicelt, you can:
-
-- Create petitions for campus issues.
-- Collect signatures from like-minded students.
-- Make a local impact.
-
-Join us in bringing positive change to your college. Start now!
-
-Sincerely,
-The Voicelt Team
-"""
-                send_mail(
-                            email_subject,
-                            email_message,
-                            settings.EMAIL_HOST_USER,
-                            [user.email],
-                            fail_silently=False,
-                        )
             return redirect('home')
     context = {'form' : form}
     return render(request, 'base/register.html', context)
