@@ -1,33 +1,41 @@
 {% extends 'main.html' %}
 {% block content %}
 <div class="petition-view">
-    <h1>{{petition.title}}</h1>
-    {% if request.user == petition.author%}
-    <a href="{% url 'edit-petition' pk=petition.pk%}">
-        <button class="petition-button">Edit Petition</button>
-    </a>
-    {% endif %}
-    <h4>({{petition.category}})</h4>
-    <h6>Posted by: {{petition.author.username}} at {{petition.creation_date}}</h6>
-    
-    <p>{{petition.description}}</p>
-    <p>Signature goal: {{petition.signature_goal}}</p>
-    <p>Total signatures: {{petition.total_signatures}}</p>
-    <form method="post">
-        {% csrf_token %}
-        <input type="hidden" name="form_type" value="sign_petition">
-        <input type="text" id="name" name="name" required minlength="4" maxlength="20" size="10" />        
-        <p><small>By checking this box you accept the TOS blah blah blah</small></p>
-        <input type="checkbox" id="tosaccept" name="tosaccept"/>
-        <button type="submit">Sign Now</button>
-    </form>
+    <div class="main-petition">
+        <h1>{{petition.title}}</h1>
+        {% if request.user == petition.author%}
+        <a href="{% url 'edit-petition' pk=petition.pk%}">
+            <button class="petition-button">Edit Petition</button>
+        </a>
+        {% endif %}
+        <h4>({{petition.category}})</h4>
+        <h6>Posted by: {{petition.author.username}} at {{petition.creation_date}}</h6>
+        
+        <p class="petition-text">{{petition.description}}</p>
+        <p>Signature goal: {{petition.signature_goal}}</p>
+        <p>Total signatures: {{petition.total_signatures}}</p>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="sign_petition">
+            <input type="text" id="name" name="name" required minlength="4" maxlength="20" size="10" />
+            <br>  
+            <span>
+                <input type="checkbox" id="tosaccept" name="tosaccept"/> 
+                <small>By checking this box you accept the TOS blah blah blah</small>
+            </span>
+                
+            <br>
+            <button type="submit">Sign Now</button>
+        </form>
+    </div>
     <br>
     <hr>
     {% for reply in replies %}
     <!--Change how comments look compared to main petition-->
-    <h6>Posted By: {{reply.author.username}}</h6>
-    <p>{{reply.description | linebreaks}}</p>
-    <br>
+    <div class="comment">
+        <small>Posted By: {{reply.author.username}}</small>
+        <p class="comment-text">{{reply.description | linebreaks}}</p>
+    </div>
     <hr>
     {% endfor %}
     <form method="post">

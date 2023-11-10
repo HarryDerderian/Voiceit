@@ -4,6 +4,6 @@
 <form method ='POST' class="petition-form"> {% csrf_token %}
     {{form.as_p}}
     <!--Description Textbox size-->
-    <input type = 'submit' value = 'Submit' />
+    <input type='submit' value='Submit' class="petition-button" />
 </form>
 {% endblock content %}
