@@ -38,18 +38,23 @@ def petitions(request) :
 def petition(request, pk) :
     # Check if the request method is GET
     if request.method == "GET" :
+        # Confirm requested petition exists
         if Petition.objects.filter(id = pk).exists() :
             # Retrieve the requested petition
             requested_petition = Petition.objects.get(id = pk)
-            # Prepare context with the requested petition and its replies
-            context = {'petition': requested_petition,
-            'replies' : PetitionReply.objects.filter(petition = requested_petition) }
+            # Retrieve all signatures associated with the petition
+            petition_signatures = Signature.objects.filter(petition = requested_petition)
+            # Retrieve all replies associated with the petition
+            replies = PetitionReply.objects.filter(petition = requested_petition)
+            # Prepare context with the requested petition and its replies/signatures
+            context = {'petition' : requested_petition, 
+                                        'replies' : replies, 
+                                                'signatures' : petition_signatures}
             # Render the petition.html template with the prepared context
             return render(request, 'base/petition.html', context)
         else :
             # Redirect to the 'petitions' page if the requested petition does not exist
             return redirect('petitions')
-    
     # Check if the request method is POST
     elif request.method == "POST" :
         # Check if the user is authenticated
@@ -72,11 +77,16 @@ def petition(request, pk) :
                 # Get user and the petition to be signed
                 user = request.user
                 signed_petition = Petition.objects.get(id = pk)
-                # Create a new signature and save it
-                signature = Signature(owner = user, petition = signed_petition)
-                signature.save()
-                # Redirect to the petition page after signing
-                return redirect('/petition/'+str(pk))
+                # Firstly, its important to check that the user has not already signed the petition
+                if Signature.objects.filter(owner = user, petition = signed_petition ).exists() :
+                    # User has already signed the petition, don't create a new signature.
+                    return redirect('/petition/'+str(pk)) 
+                else :
+                    # Create a new signature and save it
+                    signature = Signature(owner = user, petition = signed_petition)
+                    signature.save()
+                    # Redirect to the petition page after signing
+                    return redirect('/petition/'+str(pk))
         # Redirect to the login page if the user is not authenticated
         else :
             redirect_path = '/petition/'+str(pk)
