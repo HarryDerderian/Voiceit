@@ -195,7 +195,7 @@ textarea {
     font-size: larger;
 }
 
-.petition-form, .edit-petition-form li {
+.petition-form li, .edit-petition-form li {
     color: var(--red-bg);
     list-style:none;
 }
