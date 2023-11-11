@@ -46,12 +46,17 @@ def petition(request, pk) :
             requested_petition = Petition.objects.get(id = pk)
             # Retrieve all signatures associated with the petition
             petition_signatures = Signature.objects.filter(petition = requested_petition)
+            # Retrieve all users who have a signatures, on the petition
+            users = []
+            for signature in petition_signatures :
+                users.append(signature.owner)    
             # Retrieve all replies associated with the petition
             replies = PetitionReply.objects.filter(petition = requested_petition)
             # Prepare context with the requested petition and its replies/signatures
             context = {'petition' : requested_petition, 
                                         'replies' : replies, 
-                                                'signatures' : petition_signatures}
+                                                'signatures' : petition_signatures,
+                                                                            'users' : users}
             # Render the petition.html template with the prepared context
             return render(request, 'base/petition.html', context)
         else :
