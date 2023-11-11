@@ -15,7 +15,7 @@
         <p>Signature goal: {{petition.signature_goal}}</p>
         <p>Total signatures: {{petition.total_signatures}}</p>
         {% if request.user.is_authenticated %}
-        {% if not request.user.id in signatures %}
+        {% if not request.user in users %}
             <form method="post">
                 {% csrf_token %}
                 <input type="hidden" name="form_type" value="sign_petition">
