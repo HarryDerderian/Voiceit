@@ -14,19 +14,23 @@
         <p class="petition-text">{{petition.description}}</p>
         <p>Signature goal: {{petition.signature_goal}}</p>
         <p>Total signatures: {{petition.total_signatures}}</p>
-        <form method="post">
-            {% csrf_token %}
-            <input type="hidden" name="form_type" value="sign_petition">
-            <input type="text" id="name" name="name" required minlength="4" maxlength="20" size="10" />
-            <br>  
-            <span>
-                <input type="checkbox" id="tosaccept" name="tosaccept"/> 
-                <small>By checking this box you accept the TOS blah blah blah</small>
-            </span>
-                
-            <br>
-            <button type="submit">Sign Now</button>
-        </form>
+        {% if request.user.is_authenticated %}
+        {% if not request.user.id in signatures %}
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="sign_petition">
+                <input type="text" id="name" name="name" required minlength="4" maxlength="20" size="10" />
+                <br>  
+                <span>
+                    <input type="checkbox" id="tosaccept" name="tosaccept"/> 
+                    <small>By checking this box you accept the TOS</small>
+                </span>
+                    
+                <br>
+                <button type="submit">Sign Now</button>
+            </form>
+        {% endif %}
+        {% endif %}
     </div>
     <br>
     <hr>
