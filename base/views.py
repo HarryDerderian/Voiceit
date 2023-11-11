@@ -77,31 +77,24 @@ def petition(request, pk) :
             # Check if the form type is for signing a petition
             elif form_type == "sign_petition" :
                 # Get user and the petition to be signed
-                user = request.user
-                signed_petition = Petition.objects.get(id = pk)
-                # Firstly, its important to check that the user has not already signed the petition
-                if Signature.objects.filter(owner = user, petition = signed_petition ).exists() :
-                    # User has already signed the petition, don't create a new signature.
-                    return redirect('/petition/'+str(pk)) 
-                else :
-                    # Create a new signature and save it
-                    signature = Signature(owner = user, petition = signed_petition)
-                    signature.save()
-                    # Redirect to the petition page after signing
-                    return redirect('/petition/'+str(pk))
+                create_signature(request.user, Petition.objects.get(id = pk))
+                return redirect('/petition/'+str(pk))
         # Redirect to the login page if the user is not authenticated
         else :
             redirect_path = '/petition/'+str(pk)
             return redirect("/login/?previous=" + redirect_path)
 
-
-
-
-# SIGN/UNSIGN
-# GET USER, GET PETITON, UPDATE PETITION SIGNATURE COUNT
-# CREATE/REMOVE SIGNATURE OBJECT
-
-
+def create_signature(user, petition_obj) :
+    # Firstly, its important to check that the user has not already signed the petition
+    if Signature.objects.filter(owner = user, petition = petition_obj).exists() :
+        return 
+    else :
+    # Create a new signature and save it
+        signature = Signature(owner = user, petition = petition_obj)
+        signature.save()
+    # We must also update the signature count of the petition.
+    petition_obj.total_signatures += 1
+    petition_obj.save()
 
 @login_required(login_url = "/login/")
 def edit_petition(request, pk) :

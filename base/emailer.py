@@ -2,7 +2,6 @@ from django.core.mail import send_mail
 from django.conf.global_settings import EMAIL_HOST_USER
 import threading
 
-
 def welcome_email(user, users_email) :
     # Create a new thread and pass the email parameters to the function
     # This stop the website from being hung up on on sending emails.
@@ -10,11 +9,9 @@ def welcome_email(user, users_email) :
         target=__welcome_email,
         args=(user, users_email)
     )
-    
+
     # Start the thread
     thread.start()
-
-
 
 def __welcome_email(user, users_email) :
         # Set the subject for the welcome email
@@ -32,8 +29,6 @@ def __welcome_email(user, users_email) :
         # Use the django send_mail function to send the welcome email
         send_mail(email_subject, welcome_message, EMAIL_HOST_USER, [users_email], fail_silently = False)
 
-
-
 def petition_created_email(user, users_email, petition_title) :
     # Create a new thread and pass the email parameters to the function
     # This stop the website from being hung on up on sending emails.
@@ -44,8 +39,6 @@ def petition_created_email(user, users_email, petition_title) :
     
     # Start the thread
     thread.start()
-
-
 
 def __petition_created_email__(user, users_email, petition_title) :
         # Set the subject for the welcome email
