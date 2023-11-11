@@ -28,6 +28,7 @@ class Petition(models.Model) :
         return str(self.title)
 
 class Signature(models.Model) :
+    creation_date = models.DateTimeField(auto_now_add = True)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     owner = models.ForeignKey(AUTH_USER_MODEL, on_delete = models.CASCADE, null = True)
     petition = models.ForeignKey(Petition, on_delete = models.CASCADE, null = True)
