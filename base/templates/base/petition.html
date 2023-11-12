@@ -8,12 +8,12 @@
             <button class="petition-button">Edit Petition</button>
         </a>
         {% endif %}
-        <h4>({{petition.category}})</h4>
-        <h6>Posted by: {{petition.author.username}} at {{petition.creation_date}}</h6>
+        <h3>({{petition.category}})</h3>
+        <h4>Posted by: {{petition.author.username}} at {{petition.creation_date}}</h4>
         
         <p class="petition-text">{{petition.description}}</p>
-        <p>Signature goal: {{petition.signature_goal}}</p>
-        <p>Total signatures: {{petition.total_signatures}}</p>
+        <p><small>Signature goal: {{petition.signature_goal}}</small></p>
+        <p><small>Total signatures: {{petition.total_signatures}}</small></p>
         {% if request.user.is_authenticated %}
         {% if not request.user in users %}
             <form method="post">
@@ -24,12 +24,16 @@
                 <span>
                     <input type="checkbox" id="tosaccept" name="tosaccept"/> 
                     <small>By checking this box you accept the TOS</small>
+                    <p id="warning"><small>WARNING: You cannot unsign petitions! Make sure you want to sign this petition.</small></p>
                 </span>
-                    
                 <br>
                 <button type="submit">Sign Now</button>
             </form>
+        {% else %}
+            <p>You have signed this petition.</p>
         {% endif %}
+        {% else %}
+            <p>Log in to sign now!</p>
         {% endif %}
     </div>
     <br>

@@ -175,14 +175,16 @@ textarea {
     font-size: large;
 }
 
-.comment {
-    
-}
 
 .comment-text {
     font-size:small;
     background-color: black;
 }
+
+#warning {
+    color: red;
+}
+
 /*end petition view page*/
 
 /*petitions creation page*/
