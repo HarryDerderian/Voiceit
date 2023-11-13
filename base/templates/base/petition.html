@@ -33,8 +33,22 @@
             <p>You have signed this petition.</p>
         {% endif %}
         {% else %}
-            <p>Log in to sign now!</p>
+            <p><a href="{%url 'login'%}">Log in to sign now!</a></p>
         {% endif %}
+        <span>
+            {% for user in users %}
+                {{user.username}},
+            {%endfor %}
+            
+            {% with users|length|add:"-3" as numUsers %}
+            {% if numUsers > 0 %}
+                {{numUsers}} and others
+            {% endif %}
+            {% endwith %}  
+            have signed this petition!
+        </span>
+
+        
     </div>
     <br>
     <hr>
