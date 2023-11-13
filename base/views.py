@@ -99,7 +99,19 @@ def create_signature(user, petition_obj) :
         signature.save()
     # We must also update the signature count of the petition.
     petition_obj.total_signatures += 1
+    # Now we check to see if the petition has reached its signature goal
+    if petition_obj.total_signatures == petition_obj.signature_goal :
+         # Retrieve all signatures associated with the petition
+            petition_signatures = Signature.objects.filter(petition = petition_obj)
+            # Retrieve all users who have a signatures, on the petition
+            user_emails = []
+            for signature in petition_signatures :
+                user_emails.append(signature.owner.email)
+            # Mail all users who signed the petiton, alerting them the petition reached its signature goal
+            emailer.goal_reached_email(user_emails, petition_obj)
     petition_obj.save()
+
+
 
 @login_required(login_url = "/login/")
 def edit_petition(request, pk) :
