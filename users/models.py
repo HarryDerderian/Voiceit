@@ -36,8 +36,8 @@ class User(AbstractBaseUser, PermissionsMixin) :
     # We only want @csu.fullerton emails...
     # Lets work on that, the docs talk about a EmailValidator...
     def csuf_email_validator(value):
-      if not value.endswith('@csu.fullerton.edu'):
-        raise ValidationError("Only @csu.fullerton.edu email addresses are allowed.")
+      if not value.endswith('@csu.fullerton.edu') and not value.endswith('@fullerton.edu'):
+        raise ValidationError("Only @csu.fullerton.edu or @fullerton.edu email addresses are allowed.")
   
     email = models.EmailField(max_length=254, unique=True, validators = [csuf_email_validator])
     username = models.CharField(max_length=254, unique=True)

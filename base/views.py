@@ -4,12 +4,13 @@ from  users.models import User
 from django.contrib.auth import authenticate, login, logout
 from . forms import PetitionForm
 from django.contrib.auth.decorators import login_required
-from . models import Petition, Category, PetitionReply
+from . models import Petition, Category, PetitionReply, Signature
 from users.forms import SignUpForm
 from django.contrib import messages
+from . import emailer
 
 # this neat little trick requires usesr to be signed in to view this page.
-@login_required(login_url = "/login/")
+@login_required(login_url = "/login/?previous=/create-petition/")
 def create_petition(request) :
     """
         Brings the user to a page for building petitions.
@@ -24,7 +25,10 @@ def create_petition(request) :
                 new_petition = input_form.save()
                 new_petition.author = request.user
                 new_petition.save()
-                return redirect('petitions')
+                # Send an email to the user confirming the creation of the petition.
+                emailer.petition_created_email(new_petition.author.username, 
+                                               new_petition.author.email, new_petition.title)
+                return redirect('/petition/'+ str(new_petition.id))
     return render(request, 'base/create-petition.html', context)
 
 def petitions(request) :
@@ -34,28 +38,78 @@ def petitions(request) :
     return render(request, 'base/petitions.html', context)
 
 def petition(request, pk) :
+    # Check if the request method is GET
     if request.method == "GET" :
+        # Confirm requested petition exists
         if Petition.objects.filter(id = pk).exists() :
+            # Retrieve the requested petition
             requested_petition = Petition.objects.get(id = pk)
-            context = {'petition': requested_petition,
-            'replies' : PetitionReply.objects.filter(petition = requested_petition) }
+            # Retrieve all signatures associated with the petition
+            petition_signatures = Signature.objects.filter(petition = requested_petition)
+            # Retrieve all users who have a signatures, on the petition
+            users = []
+            for signature in petition_signatures :
+                users.append(signature.owner)    
+            # Retrieve all replies associated with the petition
+            replies = PetitionReply.objects.filter(petition = requested_petition)
+            # Prepare context with the requested petition and its replies/signatures
+            context = {'petition' : requested_petition, 
+                                        'replies' : replies, 
+                                                'signatures' : petition_signatures,
+                                                                            'users' : users}
+            # Render the petition.html template with the prepared context
             return render(request, 'base/petition.html', context)
         else :
+            # Redirect to the 'petitions' page if the requested petition does not exist
             return redirect('petitions')
+    # Check if the request method is POST
     elif request.method == "POST" :
+        # Check if the user is authenticated
         if request.user.is_authenticated:
-            user =  request.user
-            comment = request.POST.get('reply')
-            current_petition = Petition.objects.get(id = pk)
-            reply = PetitionReply(author = user, description = comment, petition = current_petition)
-            reply.save()
-            return redirect('/petition/'+str(pk))
+            # Get the form triggering POST: signature, or reply.
+            form_type = request.POST.get('form_type')
+            # Check if the form type is for submitting a reply
+            if form_type ==  "submit_reply":
+                # Get user, comment, and the current petition
+                user =  request.user
+                comment = request.POST.get('reply')
+                current_petition = Petition.objects.get(id = pk)
+                # Create a new reply and save it
+                reply = PetitionReply(author = user, description = comment, petition = current_petition)
+                reply.save()
+                # Redirect to the petition page after submitting the reply
+                return redirect('/petition/'+str(pk))
+            # Check if the form type is for signing a petition
+            elif form_type == "sign_petition" :
+                # Get user and the petition to be signed
+                create_signature(request.user, Petition.objects.get(id = pk))
+                return redirect('/petition/'+str(pk))
+        # Redirect to the login page if the user is not authenticated
         else :
-            return redirect("/login/")
+            redirect_path = '/petition/'+str(pk)
+            return redirect("/login/?previous=" + redirect_path)
 
-# SIGN/UNSIGN
-# GET USER, GET PETITON, UPDATE PETITION SIGNATURE COUNT
-# CREATE/REMOVE SIGNATURE OBJECT
+def create_signature(user, petition_obj) :
+    # Firstly, its important to check that the user has not already signed the petition
+    if Signature.objects.filter(owner = user, petition = petition_obj).exists() :
+        return 
+    else :
+    # Create a new signature and save it
+        signature = Signature(owner = user, petition = petition_obj)
+        signature.save()
+    # We must also update the signature count of the petition.
+    petition_obj.total_signatures += 1
+    # Now we check to see if the petition has reached its signature goal
+    if petition_obj.total_signatures == petition_obj.signature_goal :
+         # Retrieve all signatures associated with the petition
+            petition_signatures = Signature.objects.filter(petition = petition_obj)
+            # Retrieve all users who have a signatures, on the petition
+            user_emails = []
+            for signature in petition_signatures :
+                user_emails.append(signature.owner.email)
+            # Mail all users who signed the petiton, alerting them the petition reached its signature goal
+            emailer.goal_reached_email(user_emails, petition_obj)
+    petition_obj.save()
 
 
 
@@ -95,15 +149,16 @@ def home(request) :
 def aboutUs(request):
     return render(request, 'base/about.html')
 
-def loginPage(request) :
+def loginPage(request, redirect_path = 'home') :
     context = {}
+    redirect_path = request.GET.get('previous', 'home')
     if request.method == 'POST' :
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username = username, password = password)
         if user is not None :
             login(request, user)
-            return redirect('home')
+            return redirect(redirect_path)
     return render(request, 'base/login.html', context)
 
 def registerPage(request) :
@@ -116,7 +171,8 @@ def registerPage(request) :
             user = authenticate(request, username = user.username, email=user.email, password=raw_password) 
             if user is not None :
                 login(request, user)
-                
+                # Send an email to the user welcoming them to the website.
+                emailer.welcome_email(user.username, user.email)
             return redirect('home')
     context = {'form' : form}
     return render(request, 'base/register.html', context)

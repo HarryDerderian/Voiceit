@@ -3,6 +3,7 @@
 <h1>New Petition</h1>
 <form method ='POST' class="petition-form"> {% csrf_token %}
     {{form.as_p}}
-    <input type = 'submit' value = 'Submit' />
+    <!--Description Textbox size-->
+    <input type='submit' value='Submit' class="petition-button" />
 </form>
 {% endblock content %}

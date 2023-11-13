@@ -21,6 +21,7 @@ select,
 textarea {
   font-family: inherit;
   font-size: 100%;
+  border-radius: 4px;
 }
 /* whole site wrapper */
 .flex-wrapper {
@@ -118,7 +119,7 @@ textarea {
 .content {
     width:90%;
     margin:auto;
-    margin-bottom:150px;
+    margin-bottom:25px;
 }
 
 /*end content frame*/
@@ -169,32 +170,50 @@ textarea {
     width:90%;
     height:5em;
 }
+
+.petition-text {
+    font-size: large;
+}
+
+
+.comment-text {
+    font-size:small;
+    background-color: black;
+}
+
+#warning {
+    color: red;
+}
+
 /*end petition view page*/
 
 /*petitions creation page*/
-.petition-form #id_title, #id_category, #id_description {
+#id_title, #id_category,#id_description {
     display:block;
+    width: 100%;
 }
 
 .petition-form label {
     font-size: larger;
 }
 
-.petition-form li {
-    visibility: hidden;
+.petition-form li, .edit-petition-form li {
+    color: var(--red-bg);
+    list-style:none;
+}
+
+.petition-form, .edit-petition-form ul {
+    padding:0;
 }
 /*end petitions creation page */
 
 /*petition edit page */
-.edit-petition-form #id_title, #id_category, #id_description {
-    display:block;
-}
 
 .edit-petition-form {
     font-size: medium;
 }
 
-.edit-peitition-form label {
+.edit-petition-form label {
     font-size: larger;
 }
 
@@ -215,11 +234,4 @@ textarea {
 }
 /*footer small screens*/
 @media screen and (max-width:500px) {
-    .footer {
-
-    }
-    
-    .content {
-        margin-bottom:200px;
-    }
 }
