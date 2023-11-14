@@ -55,4 +55,4 @@ class User(AbstractBaseUser, PermissionsMixin) :
     objects = UserManager()
 
     def get_absolute_url(self):
-        return "/users/%i/" % (self.pk)
+        return "/profile/%i/" % (self.pk)

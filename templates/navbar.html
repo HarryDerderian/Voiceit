@@ -26,7 +26,7 @@
                 </li>
             {% endif %}
             <li>
-                <a>
+                <a href = "{% url 'profile' user.id %}">
                     Welcome, {{ request.user.username }}
                 </a>
             </li>

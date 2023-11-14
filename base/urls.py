@@ -11,5 +11,5 @@ urlpatterns = [
     path('petition/<str:pk>/', views.petition, name = "petition"),
     path('create-petition/', views.create_petition, name = "create-petition"),
     path('edit-petition/<str:pk>/', views.edit_petition, name = "edit-petition"),
-    
+    path('profile/<str:pk>/', views.profile, name = "profile")
 ]
