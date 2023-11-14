@@ -36,16 +36,24 @@
             <p><a href="{%url 'login'%}">Log in to sign now!</a></p>
         {% endif %}
         <span>
-            {% for user in users %}
-                {{user.username}},
-            {%endfor %}
+            
             
             {% with users|length|add:"-3" as numUsers %}
-            {% if numUsers > 0 %}
-                {{numUsers}} and others
+            {% if numUsers == -3 %}
+                <p>No one has signed the petition yet. Sign now to be the first!</p>
+            {% elif numUsers == -2 %}
+                <p>{{users.0.username}} has signed the petition.</p>
+            {% elif numUsers == -1 %}
+                <p>{{users.0.username}} and {{users.1.username}} have signed the petition.</p>
+            {% elif numUsers == 0 %}
+                <p>{{users.0.username}}, {{users.1.username}}, and {{users.2.username}} have signed the petition.</p>
+            {% else %}
+                {% for user in users %}
+                    {{user.username}},
+                {%endfor %}
+                and numUsers other users have signed the petition.
             {% endif %}
             {% endwith %}  
-            have signed this petition!
         </span>
 
         
