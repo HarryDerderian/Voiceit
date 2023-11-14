@@ -36,8 +36,6 @@
             <p><a href="{%url 'login'%}">Log in to sign now!</a></p>
         {% endif %}
         <span>
-            
-            
             {% with users|length|add:"-3" as numUsers %}
             {% if numUsers == -3 %}
                 <p>No one has signed the petition yet. Sign now to be the first!</p>
