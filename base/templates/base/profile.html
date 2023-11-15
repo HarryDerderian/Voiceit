@@ -1,8 +1,30 @@
-<H1>A USERRRRRRRRRRRRRRR!!!!!!!!!!!!!</H1>
+{%extends 'main.html'%}
+{%block content%}
 
-context = {
+
+<div class="logreg-center">
+    <H1>A USERRRRRRRRRRRRRRR!!!!!!!!!!!!!</H1>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <label>Username:</label>
+        <input type="text" name="username" placeholder={{user.username}} />
+        <br>
+        <label>Old Password:</label>
+        <input type="password" name="current-password" placeholder="Enter current password"/>
+        <br>
+        <label>New Password</label>
+        <input type="password" name="new-password" placeholder="Enter new password"/>
+        <br>
+        <input type="submit" value="Change Values"/>
+    </form>
+</div>
+
+
+<!-- context = {
     "user" : user,
     "users_petitions" : users_petitions,
     "user_comments" : user_comments,
     "user_signatures" : user_signatures,
-}
+} -->
+
+{%endblock content%}
