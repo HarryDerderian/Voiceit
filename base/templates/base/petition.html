@@ -1,6 +1,12 @@
 {% extends 'main.html' %}
 {% block content %}
 <div class="petition-view">
+    <!--Message display logic, feel free to change the style and look-->
+    {% for msg in messages %}
+    <div class="alert alert-warning" role="alert">
+        {{ msg }}
+      </div>
+    {% endfor %}
     <div class="main-petition">
         <h1>{{petition.title}}</h1>
         {% if request.user == petition.author%}

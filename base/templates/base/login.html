@@ -2,6 +2,13 @@
 {% block content %}
 <!--Make it prettier-->
 <div class="logreg-center">
+    <!--Message display logic, feel free to change the style and look-->
+    {% for msg in messages %}
+    <div class="alert alert-warning" role="alert">
+        {{ msg }}
+      </div>
+    {% endfor %}
+    
     <h1>Login</h1>
     <form method="POST" action="">
         {% csrf_token %}

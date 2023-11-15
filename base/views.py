@@ -94,17 +94,18 @@ def petition(request, pk) :
             # Check if the form type is for signing a petition
             elif form_type == "sign_petition" :
                 # Get user and the petition to be signed
-                create_signature(request.user, Petition.objects.get(id = pk))
+                if create_signature(request.user, Petition.objects.get(id = pk)) :
+                    messages.success(request, "You have successfully signed the petition!")
                 return redirect('/petition/'+str(pk))
         # Redirect to the login page if the user is not authenticated
         else :
             redirect_path = '/petition/'+str(pk)
             return redirect("/login/?previous=" + redirect_path)
 
-def create_signature(user, petition_obj) :
+def create_signature(user, petition_obj) -> bool:
     # Firstly, its important to check that the user has not already signed the petition
     if Signature.objects.filter(owner = user, petition = petition_obj).exists() :
-        return 
+        return False
     else :
     # Create a new signature and save it
         signature = Signature(owner = user, petition = petition_obj)
@@ -122,6 +123,7 @@ def create_signature(user, petition_obj) :
             # Mail all users who signed the petiton, alerting them the petition reached its signature goal
             emailer.goal_reached_email(user_emails, petition_obj)
     petition_obj.save()
+    return True
 
 
 
@@ -137,7 +139,7 @@ def edit_petition(request, pk) :
     user = request.user
     # Confirm the current user is the author of the petition
     if not user == requested_petition.author:
-         messages.error(request, "unauthorized access")         
+         #messages.error(request, "unauthorized access")         
          return redirect('petitions')
     else :
         update_form =  PetitionForm(instance=requested_petition)
@@ -171,6 +173,8 @@ def loginPage(request, redirect_path = 'home') :
         if user is not None :
             login(request, user)
             return redirect(redirect_path)
+        else :
+            messages.error(request, "Invalid Username/Password")
     return render(request, 'base/login.html', context)
 
 def registerPage(request) :
