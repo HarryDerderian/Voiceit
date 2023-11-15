@@ -34,7 +34,19 @@ def create_petition(request) :
 def petitions(request) :
     # A list of all petition objects, and categories
     context = {"petitions" : Petition.objects.all(),
-               "categories" : Category.objects.all() }
+                "categories" : Category.objects.all() }    
+    # Triggers if user selects a category from dropdown menu
+    if request.method == "POST" :
+        # Fetch the id of the category
+        requested_category_id = request.POST.get('q')
+        try : # Will fail if "all" is selected, its not a category... Hence try-catch
+            requested_category = Category.objects.get(id = requested_category_id)
+            requested_petitions = Petition.objects.filter(category = requested_category)
+            context = {"petitions" : requested_petitions,
+                "categories" : Category.objects.all() }
+        except : # if any unforseen requests are made, just return all petitions to be displayed
+             context = {"petitions" : Petition.objects.all(),
+                "categories" : Category.objects.all() } 
     return render(request, 'base/petitions.html', context)
 
 def petition(request, pk) :
