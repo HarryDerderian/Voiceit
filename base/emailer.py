@@ -5,7 +5,7 @@ import threading
 
 from . models import Petition
 
-"""This file will take care of all email logic"""
+#This file will take care of all email logic
 
 
 def welcome_email(user, users_email) :

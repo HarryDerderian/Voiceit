@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+# A mapping of urls and logic, this is the freeway of our website.
+
 urlpatterns = [
     path('login/', views.loginPage, name = "login"),
     path('register/', views.registerPage, name = "register"),

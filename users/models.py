@@ -3,6 +3,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
+# The data making up our users, this is required because we want
+# to have users with emails, and we want to restrict those emails.
 
 class UserManager(BaseUserManager):
   def _create_user(self, email, username, password, is_staff, is_superuser, **extra_fields):
