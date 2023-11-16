@@ -93,9 +93,10 @@ def petition(request, pk) :
                 return redirect('/petition/'+str(pk))
             # Check if the form type is for signing a petition
             elif form_type == "sign_petition" :
-                # Get user and the petition to be signed
-                if create_signature(request.user, Petition.objects.get(id = pk)) :
+                if 'tosaccept' in request.POST and create_signature(request.user, Petition.objects.get(id = pk)) :
                     messages.success(request, "You have successfully signed the petition!")
+                else :
+                    messages.error(request, "Required inputs for signature not met.")
                 return redirect('/petition/'+str(pk))
         # Redirect to the login page if the user is not authenticated
         else :
@@ -210,5 +211,3 @@ def profile(request, pk) :
             "user_signatures" : user_signatures,
         }
         return render(request, 'base/profile.html', context)
-
-

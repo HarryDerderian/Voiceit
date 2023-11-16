@@ -3,7 +3,6 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
-
 class UserManager(BaseUserManager):
   def _create_user(self, email, username, password, is_staff, is_superuser, **extra_fields):
     if not email or not username:

@@ -24,8 +24,19 @@
         {% if not request.user in users %}
             <form method="post">
                 {% csrf_token %}
+                <script>
+                    function validateUsername(input) {
+                        var desiredUsername = "{{ request.user.username }}";
+                        
+                        if (input.value !== desiredUsername) {
+                            input.setCustomValidity('Input your username to sign.');
+                        } else {
+                            input.setCustomValidity('');
+                        }
+                    }
+                </script>
                 <input type="hidden" name="form_type" value="sign_petition">
-                <input type="text" id="name" name="name" required minlength="4" maxlength="20" size="10" />
+                <input type="text" id="name" name="name" required minlength="4" maxlength="20" size="20" placeholder="{{ request.user.username }}" oninput="validateUsername(this)"/>
                 <br>  
                 <span>
                     <input type="checkbox" id="tosaccept" name="tosaccept"/> 
@@ -80,3 +91,4 @@
     </form>
 </div>
 {% endblock content %}
+

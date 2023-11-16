@@ -27,12 +27,10 @@ class UserAdmin(BaseUserAdmin):
             }
         ),
     )
-
     list_display = ('email', 'username', 'is_staff', 'last_login')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ('groups', 'user_permissions',)
-
 
 admin.site.register(User, UserAdmin)
