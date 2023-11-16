@@ -9,6 +9,10 @@ from users.forms import SignUpForm
 from django.contrib import messages
 from . import emailer
 
+
+# This file is the logic of our website, it gives meaning to urls, and function to simple tasks.
+
+
 # this neat little trick requires usesr to be signed in to view this page.
 @login_required(login_url = "/login/?previous=/create-petition/")
 def create_petition(request) :

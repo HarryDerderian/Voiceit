@@ -2,8 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from voicelt.settings import AUTH_USER_MODEL
 import uuid
-# Create your models here.
 
+
+# The data making up our website
+# Everything on the website can mostly like be found here.
+# If not here it's built in, or in our custom users dir
 class Category(models.Model) :
     category_str = models.CharField(max_length = 100)
     # category class as a String

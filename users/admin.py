@@ -6,6 +6,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .models import User
 
+# Required for special admin users, this setups admin users.
 
 class UserAdmin(BaseUserAdmin):
     fieldsets = (

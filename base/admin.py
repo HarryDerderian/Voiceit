@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+# This file registers classes, (data on the webpage) to our admin page
+# It allows us to edit or remove anything that is registered here.
 from .models import Petition, Category, PetitionReply, Signature
 
 admin.site.register(Petition)
