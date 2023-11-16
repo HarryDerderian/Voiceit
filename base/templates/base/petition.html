@@ -1,6 +1,12 @@
 {% extends 'main.html' %}
 {% block content %}
 <div class="petition-view">
+    <!--Message display logic, feel free to change the style and look-->
+    {% for msg in messages %}
+    <div class="alert alert-warning" role="alert">
+        {{ msg }}
+      </div>
+    {% endfor %}
     <div class="main-petition">
         <h1>{{petition.title}}</h1>
         {% if request.user == petition.author%}
@@ -33,8 +39,28 @@
             <p>You have signed this petition.</p>
         {% endif %}
         {% else %}
-            <p>Log in to sign now!</p>
+            <p><a href="{%url 'login'%}">Log in to sign now!</a></p>
         {% endif %}
+        <span>
+            {% with users|length|add:"-3" as numUsers %}
+            {% if numUsers == -3 %}
+                <p>No one has signed the petition yet. Sign now to be the first!</p>
+            {% elif numUsers == -2 %}
+                <p>{{users.0.username}} has signed the petition.</p>
+            {% elif numUsers == -1 %}
+                <p>{{users.0.username}} and {{users.1.username}} have signed the petition.</p>
+            {% elif numUsers == 0 %}
+                <p>{{users.0.username}}, {{users.1.username}}, and {{users.2.username}} have signed the petition.</p>
+            {% else %}
+                {% for user in users %}
+                    {{user.username}},
+                {%endfor %}
+                and numUsers other users have signed the petition.
+            {% endif %}
+            {% endwith %}  
+        </span>
+
+        
     </div>
     <br>
     <hr>

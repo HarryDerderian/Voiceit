@@ -2,6 +2,18 @@
 
 {% block content %}
 <h1>Petitions</h1>
+<label>Category Selection</label>
+<form action="" method="POST" class="petitions-dropdown">
+    {% csrf_token %}
+    <select name="q">
+        <option value="">All</option>
+        {% for category in categories %}
+        <option value={{category.id}}>{{category.category_str}}</option>
+        {% endfor %}
+    </select>
+    <input type="submit">
+</form>
+
 <div class="petitions-all">
     {% for petition in petitions %}
     <a href="{% url 'petition' petition.id%}">

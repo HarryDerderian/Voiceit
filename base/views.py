@@ -34,7 +34,19 @@ def create_petition(request) :
 def petitions(request) :
     # A list of all petition objects, and categories
     context = {"petitions" : Petition.objects.all(),
-               "categories" : Category.objects.all() }
+                "categories" : Category.objects.all() }    
+    # Triggers if user selects a category from dropdown menu
+    if request.method == "POST" :
+        # Fetch the id of the category
+        requested_category_id = request.POST.get('q')
+        try : # Will fail if "all" is selected, its not a category... Hence try-catch
+            requested_category = Category.objects.get(id = requested_category_id)
+            requested_petitions = Petition.objects.filter(category = requested_category)
+            context = {"petitions" : requested_petitions,
+                "categories" : Category.objects.all() }
+        except : # if any unforseen requests are made, just return all petitions to be displayed
+             context = {"petitions" : Petition.objects.all(),
+                "categories" : Category.objects.all() } 
     return render(request, 'base/petitions.html', context)
 
 def petition(request, pk) :
@@ -82,17 +94,18 @@ def petition(request, pk) :
             # Check if the form type is for signing a petition
             elif form_type == "sign_petition" :
                 # Get user and the petition to be signed
-                create_signature(request.user, Petition.objects.get(id = pk))
+                if create_signature(request.user, Petition.objects.get(id = pk)) :
+                    messages.success(request, "You have successfully signed the petition!")
                 return redirect('/petition/'+str(pk))
         # Redirect to the login page if the user is not authenticated
         else :
             redirect_path = '/petition/'+str(pk)
             return redirect("/login/?previous=" + redirect_path)
 
-def create_signature(user, petition_obj) :
+def create_signature(user, petition_obj) -> bool:
     # Firstly, its important to check that the user has not already signed the petition
     if Signature.objects.filter(owner = user, petition = petition_obj).exists() :
-        return 
+        return False
     else :
     # Create a new signature and save it
         signature = Signature(owner = user, petition = petition_obj)
@@ -110,6 +123,7 @@ def create_signature(user, petition_obj) :
             # Mail all users who signed the petiton, alerting them the petition reached its signature goal
             emailer.goal_reached_email(user_emails, petition_obj)
     petition_obj.save()
+    return True
 
 
 
@@ -125,7 +139,7 @@ def edit_petition(request, pk) :
     user = request.user
     # Confirm the current user is the author of the petition
     if not user == requested_petition.author:
-         messages.error(request, "unauthorized access")         
+         #messages.error(request, "unauthorized access")         
          return redirect('petitions')
     else :
         update_form =  PetitionForm(instance=requested_petition)
@@ -159,6 +173,8 @@ def loginPage(request, redirect_path = 'home') :
         if user is not None :
             login(request, user)
             return redirect(redirect_path)
+        else :
+            messages.error(request, "Invalid Username/Password")
     return render(request, 'base/login.html', context)
 
 def registerPage(request) :
@@ -176,3 +192,23 @@ def registerPage(request) :
             return redirect('home')
     context = {'form' : form}
     return render(request, 'base/register.html', context)
+
+@login_required(login_url = "/login/?previous=/create-petition/")
+def profile(request, pk) :
+    # Confirm the user is only able to access their own profile page
+    user = request.user
+    if not int(user.id) == int(pk) :
+        return redirect('home')
+    else :
+        users_petitions = Petition.objects.filter(author = user)
+        user_comments = PetitionReply.objects.filter(author = user)
+        user_signatures = Signature.objects.filter(owner = user)
+        context = {
+            "user" : user,
+            "users_petitions" : users_petitions,
+            "user_comments" : user_comments,
+            "user_signatures" : user_signatures,
+        }
+        return render(request, 'base/profile.html', context)
+
+

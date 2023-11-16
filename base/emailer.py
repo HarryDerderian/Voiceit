@@ -1,8 +1,12 @@
 from django.core.mail import send_mail
 from django.conf.global_settings import EMAIL_HOST_USER
-from . models import Petition
 
 import threading
+
+from . models import Petition
+
+"""This file will take care of all email logic"""
+
 
 def welcome_email(user, users_email) :
     # Create a new thread and pass the email parameters to the function
@@ -65,6 +69,9 @@ def goal_reached_email(all_user_emails_who_signed, petition) :
     thread.start()
 
 def __goal_reached_email__(all_user_emails_who_signed, petition) :
+      # First let the author of the petition know the good news
+      __mail_petition_author_goal_reached(petition)
+      
       # Set the subject for the petition goal being reached
       email_subject = "A petition that you signed reached its signature goal!"
       # Compose the message with petition-specific info
@@ -80,4 +87,18 @@ def __goal_reached_email__(all_user_emails_who_signed, petition) :
         "The Voicelt Team")
       # Use the django send_mail function to send the welcome email
       send_mail(email_subject, goal_reached_message, EMAIL_HOST_USER, all_user_emails_who_signed, fail_silently = False)
-        
+
+
+def __mail_petition_author_goal_reached(petition) :
+    # Set the subject
+    email_subject = "Congratulations! Your Petition Has Successfully Reached its Signature Goal!"
+    # Set the main message
+    goal_reached_message = (f"We are thrilled to inform you that your petition, titled \"{petition.title},\" has achieved its signature goal of {petition.signature_goal} supporters! This is a remarkable accomplishment and a testament to the impact of your cause.\n\n" +
+                            "Congratulations on mobilizing the community and rallying support for this important initiative. Your dedication to positive change has resonated with many, and the collective voice of the supporters has made a significant impact.\n\n" +
+                            "Here's a brief overview of the achievement:\n\n" + 
+                            f"Petition Title: {petition.title}\n" + f"Signature Goal: {petition.signature_goal}\n" + f"Current Signatures: {petition.total_signatures}\n\n" + "What's Next?\n" +
+                            "Our team will now work diligently to bring your petition to the attention of the relevant authorities. We will keep you updated on the progress and the potential impact it will have on our community.\n\n" +
+                            "Once again, thank you for your commitment to making a difference. Your passion and effort have contributed to a successful campaign, and we look forward to seeing the positive changes that will result from your advocacy.\n\n" +
+                            "Sincerely,\n" + 
+                            "The Voicelt Team")
+    send_mail(email_subject, goal_reached_message, EMAIL_HOST_USER, [petition.author.email], fail_silently = False)
