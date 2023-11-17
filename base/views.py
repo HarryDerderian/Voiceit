@@ -102,8 +102,21 @@ def petition(request, pk) :
                 else :
                     messages.error(request, "Required inputs for signature not met.")
                 return redirect('/petition/'+str(pk))
+            elif form_type == "del_petition" :
+                # confirm_delete = request.POST.get('confirm_delete') I need this from front end........
+                #if confirm_delete : I need this from front end........
+                    # Let's delete the petition.
+                    # user said they don't want to actually delete the petition, do nothing
+                    petition = Petition.objects.get(id=pk)
+                    petition.delete()
+                    messages.success(request, "You have successfully deleted the petition...")
+                    return redirect('home')
+                #else :
+                  #  return redirect('/petition/'+str(pk))
+               
         # Redirect to the login page if the user is not authenticated
         else :
+            # This will allow login to redirect back here.
             redirect_path = '/petition/'+str(pk)
             return redirect("/login/?previous=" + redirect_path)
 

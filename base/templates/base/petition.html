@@ -12,6 +12,12 @@
         {% if request.user == petition.author%}
         <a href="{% url 'edit-petition' pk=petition.pk%}">
             <button class="petition-button">Edit Petition</button>
+            
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="del_petition">
+                <button type="submit" class="petition-button">Delete Petition</button>
+            </form>
         </a>
         {% endif %}
         <h3>({{petition.category}})</h3>
