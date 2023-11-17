@@ -70,6 +70,15 @@ textarea {
     border-radius:25px;
 }
 
+.navbar .logo {
+    padding:2px;
+}
+
+.navbar .logo img {
+    padding:none;
+    height: 3em;
+}
+
 /* Navbar small Screens */
 
 @media screen and (max-width:450px) {
@@ -280,6 +289,10 @@ textarea {
     padding-bottom: 10px;
     line-height: 0.8;
     margin-top: auto;
+}
+
+.footer img {
+    height: 2em;
 }
 /*footer small screens*/
 @media screen and (max-width:500px) {
