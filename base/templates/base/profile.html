@@ -23,38 +23,46 @@
     </form>
 </div>
 <hr>
-<div class="user-petitions">
-    <h2>Your Petitions</h2>
-    {% for petition in user_petitions %}
-    <h3><a href="{% url 'petition' petition.id%}">{{petition.title}}</a></h3>
-    <small>
-        <p>Last Updated: {{petition.last_updated}}</p>
-        <p>Signatures: {{petition.total_signatures}}/{{petition.signature_goal}}</p>
-    </small>
-    {%endfor%}
-</div>
-<div class="user-comments">
-    <h2>Your Comments</h2>
-    {% for comment in user_comments %}
-    {% for petition in all_petitions %}
-    {% if comment.petition_id == petition.id%}
-    <h3>In <a href="{% url 'petition' petition.id%}">{{petition.title}}</a> you replied:</h3>
-    {%endif%}
-    {%endfor%}
-    <p>
-        {{comment.description}}
-    </p>
-    {%endfor%}
-</div>
-<div class="user-signatures">
-    <h2>You signed:</h2>
-    {% for signature in user_signatures %}
-    {% for petition in all_petitions %}
-    {% if signature.petition_id == petition.id%}
-        <h3><a href="{% url 'petition' petition.id%}">{{petition.title}}</a></h3>
-    {%endif%}
-    {%endfor%}
-    {%endfor%}
+<div class="userpage-grid">
+    <div class="user-petitions">
+        <h2>Your Petitions</h2>
+        {% for petition in user_petitions %}
+        <div class="userpage-striping">
+            <h3><a href="{% url 'petition' petition.id%}">{{petition.title}}</a></h3>
+            <small>
+                <p>Last Updated: {{petition.last_updated}}</p>
+                <p>Signatures: {{petition.total_signatures}}/{{petition.signature_goal}}</p>
+            </small>
+        </div>
+        {%endfor%}
+    </div>
+    <div class="user-comments">
+        <h2>Your Comments</h2>
+        {% for comment in user_comments %}
+        <div class="userpage-striping">
+            {% for petition in all_petitions %}
+            {% if comment.petition_id == petition.id%}
+            <h3>In <a href="{% url 'petition' petition.id%}">{{petition.title}}</a> you replied:</h3>
+            {%endif%}
+            {%endfor%}
+            <p>
+                {{comment.description}}
+            </p>
+        </div>
+        {%endfor%}
+    </div>
+    <div class="user-signatures">
+        <h2>You signed:</h2>
+        {% for signature in user_signatures %}
+        <div class="userpage-striping">
+            {% for petition in all_petitions %}
+            {% if signature.petition_id == petition.id%}
+                <h3><a href="{% url 'petition' petition.id%}">{{petition.title}}</a></h3>
+            {%endif%}
+            {%endfor%}
+        </div>
+        {%endfor%}
+    </div>
 </div>
 
 

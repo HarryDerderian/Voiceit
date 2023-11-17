@@ -225,9 +225,47 @@ textarea {
     width:50%;
     margin:auto;
     margin-bottom:25px;
+    text-align: center;
 }
 
 /*end*/
+
+/*Userpage*/
+.userpage-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 10px;
+}
+
+.user-petitions {
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+.user-comments {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+.user-signatures {
+    grid-area: 1 / 3 / 2 / 4;
+}
+
+.userpage-striping {
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.userpage-striping:nth-of-type(odd) {
+    background-color: lightcyan;
+}
+
+.userpage-striping:nth-of-type(even) {
+    background-color: lightpink;
+}
+
+/*End userpage*/
+
+
 
 /*footer*/
 
