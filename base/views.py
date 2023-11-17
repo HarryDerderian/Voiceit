@@ -214,17 +214,18 @@ def registerPage(request) :
 @login_required(login_url = "/login/?previous=/create-petition/")
 def profile(request, pk) :
     # Confirm the user is only able to access their own profile page
-    user = request.user
-    if not int(user.id) == int(pk) :
+    userid = request.user.id
+    if not int(userid) == int(pk) :
         return redirect('home')
-    else :
-        users_petitions = Petition.objects.filter(author = user)
-        user_comments = PetitionReply.objects.filter(author = user)
-        user_signatures = Signature.objects.filter(owner = user)
+    else:
+        user_petitions = Petition.objects.filter(author_id=userid)
+        user_comments = PetitionReply.objects.filter(author_id=userid)
+        user_signatures = Signature.objects.filter(owner_id=userid)
+        all_petitions = Petition.objects.all()
         context = {
-            "user" : user,
-            "users_petitions" : users_petitions,
+            "user_petitions" : user_petitions,
             "user_comments" : user_comments,
             "user_signatures" : user_signatures,
+            "all_petitions" : all_petitions,
         }
         return render(request, 'base/profile.html', context)
