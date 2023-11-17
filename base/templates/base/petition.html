@@ -71,7 +71,7 @@
                 {% for user in users %}
                     {{user.username}},
                 {%endfor %}
-                and numUsers other users have signed the petition.
+                and {{numUsers}} other users have signed the petition.
             {% endif %}
             {% endwith %}  
         </span>
