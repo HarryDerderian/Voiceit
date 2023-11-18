@@ -5,6 +5,7 @@
     --orange-hover: rgba(228,100,52, .25);
     --yellow-bg: rgb(212,172,100);
     --red-bg: rgb(204, 36, 52);
+    --red-light:#d13a48;
     --blue-bg: rgb(44, 76, 124);
     --blue-light: rgb(80, 116, 170);
     --light-black: #272727;
@@ -163,12 +164,30 @@ textarea {
     padding: 1em;
     float:right;
     border-radius: 40px;
+    margin: 0px 3px;
 }
 
 .petition-button:hover {
     background-color: var(--blue-light);
     text-decoration: underline;
 }
+
+.petition-button-delete {
+    border:none;
+    background-color: var(--red-bg);
+    color:white;
+    padding: 1em;
+    float:right;
+    border-radius: 40px;
+    margin: 0px 3px;
+}
+
+
+.petition-button-delete:hover {
+    background-color:var(--red-light);
+    text-decoration: underline;
+}
+
 /*end petitions page*/
 
 /*petition view page*/
