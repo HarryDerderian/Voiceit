@@ -5,6 +5,7 @@
     --orange-hover: rgba(228,100,52, .25);
     --yellow-bg: rgb(212,172,100);
     --red-bg: rgb(204, 36, 52);
+    --red-light:#d13a48;
     --blue-bg: rgb(44, 76, 124);
     --blue-light: rgb(80, 116, 170);
     --light-black: #272727;
@@ -68,6 +69,15 @@ textarea {
     text-decoration: underline;
     background-color: var(--orange-light);
     border-radius:25px;
+}
+
+.navbar .logo {
+    padding:2px;
+}
+
+.navbar .logo img {
+    padding:none;
+    height: 3em;
 }
 
 /* Navbar small Screens */
@@ -154,12 +164,30 @@ textarea {
     padding: 1em;
     float:right;
     border-radius: 40px;
+    margin: 0px 3px;
 }
 
 .petition-button:hover {
     background-color: var(--blue-light);
     text-decoration: underline;
 }
+
+.petition-button-delete {
+    border:none;
+    background-color: var(--red-bg);
+    color:white;
+    padding: 1em;
+    float:right;
+    border-radius: 40px;
+    margin: 0px 3px;
+}
+
+
+.petition-button-delete:hover {
+    background-color:var(--red-light);
+    text-decoration: underline;
+}
+
 /*end petitions page*/
 
 /*petition view page*/
@@ -225,9 +253,47 @@ textarea {
     width:50%;
     margin:auto;
     margin-bottom:25px;
+    text-align: center;
 }
 
 /*end*/
+
+/*Userpage*/
+.userpage-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 10px;
+}
+
+.user-petitions {
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+.user-comments {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+.user-signatures {
+    grid-area: 1 / 3 / 2 / 4;
+}
+
+.userpage-striping {
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.userpage-striping:nth-of-type(odd) {
+    background-color: lightcyan;
+}
+
+.userpage-striping:nth-of-type(even) {
+    background-color: lightpink;
+}
+
+/*End userpage*/
+
+
 
 /*footer*/
 
@@ -242,6 +308,10 @@ textarea {
     padding-bottom: 10px;
     line-height: 0.8;
     margin-top: auto;
+}
+
+.footer img {
+    height: 2em;
 }
 /*footer small screens*/
 @media screen and (max-width:500px) {

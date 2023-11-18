@@ -12,6 +12,12 @@
         {% if request.user == petition.author%}
         <a href="{% url 'edit-petition' pk=petition.pk%}">
             <button class="petition-button">Edit Petition</button>
+            
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="del_petition">
+                <button type="submit" class="petition-button-delete">Delete Petition</button>
+            </form>
         </a>
         {% endif %}
         <h3>({{petition.category}})</h3>
@@ -46,8 +52,7 @@
                 <br>
                 <button type="submit">Sign Now</button>
             </form>
-        {% else %}
-            <p>You have signed this petition.</p>
+            
         {% endif %}
         {% else %}
             <p><a href="{%url 'login'%}">Log in to sign now!</a></p>
@@ -66,7 +71,7 @@
                 {% for user in users %}
                     {{user.username}},
                 {%endfor %}
-                and numUsers other users have signed the petition.
+                and {{numUsers}} other users have signed the petition.
             {% endif %}
             {% endwith %}  
         </span>

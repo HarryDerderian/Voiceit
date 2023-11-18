@@ -8,6 +8,8 @@ from . models import Petition, Category, PetitionReply, Signature
 from users.forms import SignUpForm
 from django.contrib import messages
 from . import emailer
+from django.contrib.auth.hashers import check_password
+
 
 
 # This file is the logic of our website, it gives meaning to urls, and function to simple tasks.
@@ -102,8 +104,21 @@ def petition(request, pk) :
                 else :
                     messages.error(request, "Required inputs for signature not met.")
                 return redirect('/petition/'+str(pk))
+            elif form_type == "del_petition" :
+                # confirm_delete = request.POST.get('confirm_delete') I need this from front end........
+                #if confirm_delete : I need this from front end........
+                    # Let's delete the petition.
+                    # user said they don't want to actually delete the petition, do nothing
+                    petition = Petition.objects.get(id=pk)
+                    petition.delete()
+                    messages.success(request, "You have successfully deleted the petition...")
+                    return redirect('home')
+                #else :
+                  #  return redirect('/petition/'+str(pk))
+               
         # Redirect to the login page if the user is not authenticated
         else :
+            # This will allow login to redirect back here.
             redirect_path = '/petition/'+str(pk)
             return redirect("/login/?previous=" + redirect_path)
 
@@ -201,17 +216,39 @@ def registerPage(request) :
 @login_required(login_url = "/login/?previous=/create-petition/")
 def profile(request, pk) :
     # Confirm the user is only able to access their own profile page
-    user = request.user
-    if not int(user.id) == int(pk) :
+    userid = request.user.id
+    if not int(userid) == int(pk) :
         return redirect('home')
-    else :
-        users_petitions = Petition.objects.filter(author = user)
-        user_comments = PetitionReply.objects.filter(author = user)
-        user_signatures = Signature.objects.filter(owner = user)
+    else:
+        user = request.user
+        user_petitions = Petition.objects.filter(author_id=userid)
+        user_comments = PetitionReply.objects.filter(author_id=userid)
+        user_signatures = Signature.objects.filter(owner_id=userid)
+        all_petitions = Petition.objects.all()
         context = {
-            "user" : user,
-            "users_petitions" : users_petitions,
+            "user_petitions" : user_petitions,
             "user_comments" : user_comments,
             "user_signatures" : user_signatures,
+            "all_petitions" : all_petitions,
         }
+        if request.method == "POST" :
+            new_password = request.POST.get('new-password', None)
+            current_pass = request.POST.get("current-password")
+            if check_password(current_pass, user.password) :
+                if new_password :
+                    user.set_password(new_password)
+                    user.save()
+                    login(request, user)
+                    messages.success(request, "password udpated.")
+                new_name = request.POST.get('username', None)
+                name_is_taken = User.objects.filter(username=new_name).exclude(pk=user.pk).exists()
+                if  new_name and not name_is_taken :
+                    user.username = new_name
+                    user.save()   
+                    messages.success(request, "user-name updated.")
+                if name_is_taken :
+                    messages.success(request, "A user already has that username.")
+            else :
+                messages.success(request, "The password you input for current password is wrong.") 
+            
         return render(request, 'base/profile.html', context)

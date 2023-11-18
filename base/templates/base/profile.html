@@ -2,12 +2,19 @@
 {%block content%}
 
 
+<!-- No forums; our goal is to showcase information about the current user, including a list of petitions they have created, their comments, and the petitions they have signed. -->
+
+{% for msg in messages %}
+    <div class="alert alert-warning" role="alert">
+        {{ msg }}
+    </div>
+{% endfor %}
 <div class="logreg-center">
-    <H1>A USERRRRRRRRRRRRRRR!!!!!!!!!!!!!</H1>
+    <H1>User Homepage</H1>
     <form method="POST" action="">
         {% csrf_token %}
         <label>Username:</label>
-        <input type="text" name="username" placeholder={{user.username}} />
+        <input type="text" name="username" placeholder="Enter user-name" />
         <br>
         <label>Old Password:</label>
         <input type="password" name="current-password" placeholder="Enter current password"/>
@@ -18,6 +25,49 @@
         <input type="submit" value="Change Values"/>
     </form>
 </div>
+<hr>
+<div class="userpage-grid">
+    <div class="user-petitions">
+        <h2>Your Petitions</h2>
+        {% for petition in user_petitions %}
+        <div class="userpage-striping">
+            <h3><a href="{% url 'petition' petition.id%}">{{petition.title}}</a></h3>
+            <small>
+                <p>Last Updated: {{petition.last_updated}}</p>
+                <p>Signatures: {{petition.total_signatures}}/{{petition.signature_goal}}</p>
+            </small>
+        </div>
+        {%endfor%}
+    </div>
+    <div class="user-comments">
+        <h2>Your Comments</h2>
+        {% for comment in user_comments %}
+        <div class="userpage-striping">
+            {% for petition in all_petitions %}
+            {% if comment.petition_id == petition.id%}
+            <h3>In <a href="{% url 'petition' petition.id%}">{{petition.title}}</a> you replied:</h3>
+            {%endif%}
+            {%endfor%}
+            <p>
+                {{comment.description}}
+            </p>
+        </div>
+        {%endfor%}
+    </div>
+    <div class="user-signatures">
+        <h2>You signed:</h2>
+        {% for signature in user_signatures %}
+        <div class="userpage-striping">
+            {% for petition in all_petitions %}
+            {% if signature.petition_id == petition.id%}
+                <h3><a href="{% url 'petition' petition.id%}">{{petition.title}}</a></h3>
+            {%endif%}
+            {%endfor%}
+        </div>
+        {%endfor%}
+    </div>
+</div>
+
 
 
 <!-- context = {
