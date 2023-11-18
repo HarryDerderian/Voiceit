@@ -4,14 +4,17 @@
 
 <!-- No forums; our goal is to showcase information about the current user, including a list of petitions they have created, their comments, and the petitions they have signed. -->
 
-
-
+{% for msg in messages %}
+    <div class="alert alert-warning" role="alert">
+        {{ msg }}
+    </div>
+{% endfor %}
 <div class="logreg-center">
     <H1>User Homepage</H1>
     <form method="POST" action="">
         {% csrf_token %}
         <label>Username:</label>
-        <input type="text" name="username" placeholder={{user.username}} />
+        <input type="text" name="username" placeholder="Enter user-name" />
         <br>
         <label>Old Password:</label>
         <input type="password" name="current-password" placeholder="Enter current password"/>

@@ -8,6 +8,8 @@ from . models import Petition, Category, PetitionReply, Signature
 from users.forms import SignUpForm
 from django.contrib import messages
 from . import emailer
+from django.contrib.auth.hashers import check_password
+
 
 
 # This file is the logic of our website, it gives meaning to urls, and function to simple tasks.
@@ -218,6 +220,7 @@ def profile(request, pk) :
     if not int(userid) == int(pk) :
         return redirect('home')
     else:
+        user = request.user
         user_petitions = Petition.objects.filter(author_id=userid)
         user_comments = PetitionReply.objects.filter(author_id=userid)
         user_signatures = Signature.objects.filter(owner_id=userid)
@@ -228,4 +231,24 @@ def profile(request, pk) :
             "user_signatures" : user_signatures,
             "all_petitions" : all_petitions,
         }
+        if request.method == "POST" :
+            new_password = request.POST.get('new-password', None)
+            current_pass = request.POST.get("current-password")
+            if check_password(current_pass, user.password) :
+                if new_password :
+                    user.set_password(new_password)
+                    user.save()
+                    login(request, user)
+                    messages.success(request, "password udpated.")
+                new_name = request.POST.get('username', None)
+                name_is_taken = User.objects.filter(username=new_name).exclude(pk=user.pk).exists()
+                if  new_name and not name_is_taken :
+                    user.username = new_name
+                    user.save()   
+                    messages.success(request, "user-name updated.")
+                if name_is_taken :
+                    messages.success(request, "A user already has that username.")
+            else :
+                messages.success(request, "The password you input for current password is wrong.") 
+            
         return render(request, 'base/profile.html', context)
