@@ -1,13 +1,21 @@
-# Voicelt - Empowering Student Voices for Local Change
-Welcome to Voicelt, a platform designed to empower students to make a difference in their college campuses. In a world where global change is essential, we believe in the power of thinking locally to bring about meaningful transformations. This README provides an overview of our project and how to get started with it.
+VoiceIt! - Igniting Change through Student Voices
+Welcome to VoiceIt!, where students' voices become a catalyst for change in our dynamic world. We understand that students encounter a variety of issues in today's society, many of which often go unnoticed or unaddressed. Recognizing this systemic problem, we identified the need for a platform that brings attention to these student concerns.
 
-## About Voicelt
-Quite often, we see enterprising youth striving to make a significant impact on the world. Popular platforms like Change.org and GoFundMe provide a stage for various causes, but there's a gap when it comes to localized change. Voicelt addresses this gap by focusing on enabling students to create, submit, and gather signatures for petitions that affect their college campuses directly.
+About VoiceIt!
+VoiceIt! is a platform created by Ahad Ahmad, Harry Derderian, Ryan Monte, Harsh Chuncha, and Kevin Liu. Our mission is to provide a space where students can shed light on issues within their local campus community, whether they be related to social injustice or essential student needs.
 
-## Key Features:
+Our Belief in the Future of Students
+We firmly believe that students are the driving force for the future, and their voices deserve to be heard. Every student has the right to bring attention to issues that impact their daily lives within the university setting. We aim to amplify the voices of the students who traverse the university halls daily.
 
-Create Petitions: Students can easily create petitions for issues that pertain to their college or university.
-Collect Signatures: Share your petitions and gather support from fellow students who care about the same issues.
-Local Impact: By thinking locally, we can empower students to drive change within their educational institutions.
-Why Voicelt?
-Voicelt follows the principle of "think locally, act globally." We firmly believe that meaningful changes often start on a smaller scale. By giving students the tools to address campus-specific issues, we foster a sense of empowerment and ownership within their respective institutions of higher learning. This approach is crucial because it's at the local level that some of the most impactful changes can be initiated, benefiting students from diverse backgrounds.
+Why VoiceIt!?
+Raise Awareness: Voice your concerns on our platform and bring attention to the issues that matter to you.
+Localized Impact: Address problems specific to your campus, creating a positive change in your immediate community.
+Empower Student Voices: Exercise your right to be heard and contribute to the collective dialogue on university life.
+
+![](readmeImages/img1.png)
+![](readmeImages/img2.png)
+![](readmeImages/img3.png)
+![](readmeImages/img4.png)
+![](readmeImages/img5.png)
+![](readmeImages/img6.png)
+![](readmeImages/img7.png)
