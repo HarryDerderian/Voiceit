@@ -12,10 +12,10 @@ Raise Awareness: Voice your concerns on our platform and bring attention to the 
 Localized Impact: Address problems specific to your campus, creating a positive change in your immediate community.
 Empower Student Voices: Exercise your right to be heard and contribute to the collective dialogue on university life.
 
-![](readmeImages/img1.png)
-![](readmeImages/img2.png)
-![](readmeImages/img3.png)
-![](readmeImages/img4.png)
-![](readmeImages/img5.png)
-![](readmeImages/img6.png)
-![](readmeImages/img7.png)
+![](readmeImages/img1.PNG)
+![](readmeImages/img2.PNG)
+![](readmeImages/img3.PNG)
+![](readmeImages/img4.PNG)
+![](readmeImages/img5.PNG)
+![](readmeImages/img6.PNG)
+![](readmeImages/img7.PNG)
